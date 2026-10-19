@@ -46,7 +46,7 @@ export default function A4Sheet({ sheet, showAnswers = false }) {
         </div>
       </header>
 
-      {/* 2. 1단락: 말장난 쏙쏙 연상 영단어 (3개) - 가로 3열 유지 */}
+      {/* 2. 1단락: 말장난 쏙쏙 연상 영단어 (5개) - 가로 5열 grid-cols-5 */}
       <section className="mb-4 avoid-break">
         <div className="flex items-center justify-between bg-amber-500 text-white px-3 py-1 rounded-md">
           <div className="flex items-center gap-1.5 font-bold text-sm">
@@ -55,56 +55,75 @@ export default function A4Sheet({ sheet, showAnswers = false }) {
             </span>
             <span>말장난 쏙쏙 연상 영단어</span>
             <span className="text-xs font-normal opacity-90 hidden sm:inline">
-              (한글 소리와 뜻을 연결해 쉽게 외워요! 3단어)
+              (한글 소리와 뜻을 연결해 쉽게 외워요! 5단어)
             </span>
           </div>
           <span className="text-xs font-medium">연상 기억법 💡</span>
         </div>
 
-        {/* 무조건 가로 3열 grid-cols-3 유지 */}
-        <div className="grid grid-cols-3 gap-2 mt-2">
-          {s1?.words?.map((item, idx) => (
-            <div
-              key={idx}
-              className="border-2 border-amber-200 rounded-lg p-2.5 bg-amber-50/40 relative flex flex-col justify-between"
-            >
-              <div>
-                <div className="flex items-baseline justify-between">
-                  <div className="flex items-baseline gap-1.5">
-                    <span className="text-base font-black text-amber-900 tracking-wide">
+        {/* 가로 5열 grid-cols-5 유지 */}
+        <div className="grid grid-cols-5 gap-1.5 mt-2">
+          {(() => {
+            let s1Words = s1?.words ? [...s1.words] : [];
+            if (s1Words.length < 5 && s3?.words) {
+              const existing = new Set(s1Words.map(w => w.word.toLowerCase()));
+              for (const w of s3.words) {
+                if (s1Words.length >= 5) break;
+                if (!existing.has(w.word.toLowerCase())) {
+                  s1Words.push({
+                    word: w.word,
+                    pronunciation: `[${w.word}]`,
+                    part_of_speech: '단어',
+                    mnemonic: `${w.word} 쏙쏙! 뜻: ${w.meaning}`,
+                    meaning: w.meaning,
+                    example_en: `I learn the word "${w.word}".`,
+                    example_ko: `"${w.word}" 단어를 익혀요.`
+                  });
+                  existing.add(w.word.toLowerCase());
+                }
+              }
+            }
+            return s1Words.slice(0, 5).map((item, idx) => (
+              <div
+                key={idx}
+                className="border-2 border-amber-200 rounded-lg p-2 bg-amber-50/40 relative flex flex-col justify-between"
+              >
+                <div>
+                  <div className="flex items-baseline justify-between">
+                    <span className="text-sm font-black text-amber-900 tracking-tight">
                       {item.word}
                     </span>
-                    <span className="text-[11px] text-amber-700 font-medium">
-                      {item.pronunciation}
-                    </span>
+                    {item.part_of_speech && (
+                      <span className="text-[9px] px-1 py-0.2 bg-amber-100 text-amber-800 rounded font-semibold">
+                        {item.part_of_speech}
+                      </span>
+                    )}
                   </div>
-                  {item.part_of_speech && (
-                    <span className="text-[10px] px-1 py-0.2 bg-amber-100 text-amber-800 rounded font-semibold">
-                      {item.part_of_speech}
-                    </span>
-                  )}
+                  <div className="text-[10px] text-amber-700 font-medium">
+                    {item.pronunciation}
+                  </div>
+
+                  {/* Mnemonic Sentence */}
+                  <div className="mt-1 bg-amber-100/90 text-amber-950 p-1.5 rounded text-[10px] font-bold border border-amber-300 leading-tight">
+                    <span className="text-amber-600 mr-0.5">💡</span>
+                    {item.mnemonic}
+                  </div>
+
+                  {/* Meaning */}
+                  <div className="mt-1 text-[11px] font-bold text-slate-800">
+                    <span className="text-slate-500 font-medium mr-1">뜻:</span>
+                    <span className="text-slate-900 text-xs font-black">{item.meaning}</span>
+                  </div>
                 </div>
 
-                {/* Mnemonic Sentence */}
-                <div className="mt-1 bg-amber-100/90 text-amber-950 px-2 py-1 rounded text-xs font-bold border border-amber-300">
-                  <span className="text-amber-600 mr-1">💡</span>
-                  {item.mnemonic}
-                </div>
-
-                {/* Meaning */}
-                <div className="mt-1 text-xs font-bold text-slate-800">
-                  <span className="text-slate-500 font-semibold mr-1">뜻:</span>
-                  <span className="text-slate-900 text-sm font-extrabold">{item.meaning}</span>
+                {/* Example */}
+                <div className="mt-1.5 pt-1 border-t border-amber-200/70 text-[9px] leading-tight">
+                  <p className="font-semibold text-slate-700 truncate" title={item.example_en}>{item.example_en}</p>
+                  <p className="text-slate-500 text-[8.5px] truncate" title={item.example_ko}>{item.example_ko}</p>
                 </div>
               </div>
-
-              {/* Example */}
-              <div className="mt-1.5 pt-1.5 border-t border-amber-200/70 text-[11px]">
-                <p className="font-semibold text-slate-700">{item.example_en}</p>
-                <p className="text-slate-500 text-[10px] mt-0.5">{item.example_ko}</p>
-              </div>
-            </div>
-          ))}
+            ));
+          })()}
         </div>
       </section>
 
