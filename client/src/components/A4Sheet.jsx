@@ -90,10 +90,10 @@ const BUILTIN_MNEMONIC_DICT = {
     word: 'curious',
     pronunciation: '[큐리어스 / ˈkjʊəriəs]',
     part_of_speech: '형용사',
-    mnemonic: '큐리(귀여)운 아기 고양이가 상자 속이 궁금해서 기웃기웃!',
+    mnemonic: '질문 큐(Q)! 궁금한 게 너무 많은 호기심(curious) 대장!',
     mnemonic_candidates: [
-      '큐리(귀여)운 아기 고양이가 상자 속이 궁금해서 기웃기웃!',
       '질문 큐(Q)! 궁금한 게 너무 많은 호기심(curious) 대장!',
+      '큐리(귀여)운 아기 고양이가 상자 속이 궁금해서 기웃기웃!',
       '큐리(호기심) 박사님처럼 세상 모든 게 신기하고 궁금해!'
     ],
     meaning: '호기심 많은, 궁금한',
