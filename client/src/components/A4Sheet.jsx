@@ -1,12 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-// 풍부한 초등 필수 어휘 연상 및 발음 사전 (누락/대체 방지)
+// 풍부한 초등 필수 어휘 연상 및 발음 사전 (3개 후보군 완비)
 const BUILTIN_MNEMONIC_DICT = {
   rule: {
     word: 'rule',
     pronunciation: '[룰 / ruːl]',
     part_of_speech: '명사',
-    mnemonic: "루루루~ 노래 부르며 규칙을 지켜요! 게임에도 '룰'이 중요해!",
+    mnemonic: "게임할 때 룰루랄라 노래 부르며 즐겁게 규칙(rule)을 지켜요!",
+    mnemonic_candidates: [
+      "게임할 때 룰루랄라 노래 부르며 즐겁게 규칙(rule)을 지켜요!",
+      "룰(rule)을 잘 지켜야 친구들과 다투지 않고 즐겁게 놀아요!",
+      "눈누난나 신나도 게임의 기본 규칙(룰)은 꼭 지키기!"
+    ],
     meaning: '규칙',
     example_en: "Let's learn the rules of this game.",
     example_ko: '이 게임의 규칙을 배워보자.'
@@ -15,7 +20,12 @@ const BUILTIN_MNEMONIC_DICT = {
     word: 'win',
     pronunciation: '[윈 / wɪn]',
     part_of_speech: '동사',
-    mnemonic: "친구랑 게임해서 이겨 '윈윈'하는 기분! 내가 '윈'하고 싶어!",
+    mnemonic: "친구랑 정정당당하게 겨뤄서 승리하고 윈-윈(win-win)하자!",
+    mnemonic_candidates: [
+      "친구랑 정정당당하게 겨뤄서 승리하고 윈-윈(win-win)하자!",
+      "바람(Wind)처럼 씽씽 달려 경기에서 멋지게 이기다(win)!",
+      "내가 경기에서 이기길(win) 우리 팀 모두가 원(win)해!"
+    ],
     meaning: '이기다',
     example_en: 'I want to win the game!',
     example_ko: '나는 그 게임에서 이기고 싶어!'
@@ -24,7 +34,12 @@ const BUILTIN_MNEMONIC_DICT = {
     word: 'share',
     pronunciation: '[쉐어 / ʃeər]',
     part_of_speech: '동사',
-    mnemonic: "쉐프가 맛있는 음식을 '쉐어(나눠)' 주네! 친구랑 장난감을 '쉐어'하자!",
+    mnemonic: "새로 산 장난감, 친구랑 사이좋게 쉐어(share: 나눠 쓰기)하자!",
+    mnemonic_candidates: [
+      "새로 산 장난감, 친구랑 사이좋게 쉐어(share: 나눠 쓰기)하자!",
+      "쉐프가 만든 맛있는 간식을 친구들과 함께 나누다(share)!",
+      "달콤한 초콜릿 하나 반으로 쪼개서 친구와 쉐어(나누기)!"
+    ],
     meaning: '공유하다, 나누다',
     example_en: 'Can you share your toys with me?',
     example_ko: '나랑 네 장난감을 같이 쓸 수 있니?'
@@ -33,7 +48,12 @@ const BUILTIN_MNEMONIC_DICT = {
     word: 'explore',
     pronunciation: '[익스플로어 / ɪkˈsplɔːr]',
     part_of_speech: '동사',
-    mnemonic: '익스플로러 타고 미지의 신비한 세계를 탐험하다!',
+    mnemonic: '익스플로러 탐험선 타고 미지의 신비한 세계를 탐험하다!',
+    mnemonic_candidates: [
+      '익스플로러 탐험선 타고 미지의 신비한 세계를 탐험하다!',
+      '익숙한 길을 벗어나 신비로운 비밀의 숲을 탐험(explore)하자!',
+      '보물 지도를 쫙 펴고(익스) 바닷속 비밀 동굴을 탐험하다!'
+    ],
     meaning: '탐험하다',
     example_en: "Let's explore the mystery cave.",
     example_ko: '신비한 동굴을 함께 탐험해 보자.'
@@ -42,7 +62,12 @@ const BUILTIN_MNEMONIC_DICT = {
     word: 'whisper',
     pronunciation: '[휘스퍼 / ˈwɪspər]',
     part_of_speech: '동사',
-    mnemonic: '비밀을 말할 땐 귓가에 휘~ 스르륵 휘스퍼!',
+    mnemonic: '비밀을 말할 땐 귓가에 바람처럼 휘~ 스르륵 휘스퍼!',
+    mnemonic_candidates: [
+      '비밀을 말할 땐 귓가에 바람처럼 휘~ 스르륵 휘스퍼!',
+      '귀에 대고 휘파람 불듯 살짝 조용히 속삭이다(whisper)!',
+      '도서관에선 큰 소리 대신 귓가에 휘~ 살짝 속삭여요!'
+    ],
     meaning: '속삭이다, 귓속말하다',
     example_en: 'Please whisper in the library.',
     example_ko: '도서관에서는 조용히 속삭여 줘.'
@@ -51,7 +76,12 @@ const BUILTIN_MNEMONIC_DICT = {
     word: 'blunder',
     pronunciation: '[블런더 / ˈblʌndər]',
     part_of_speech: '명사',
-    mnemonic: '실수하면 불난다! 실수해서 큰불이 났네!',
+    mnemonic: '실수하면 큰 불난다(블런더)! 불나지 않게 큰 실수 조심!',
+    mnemonic_candidates: [
+      '실수하면 큰 불난다(블런더)! 불나지 않게 큰 실수 조심!',
+      '시험 문제 안 보고(blind) 풀다 어처구니없는 큰 실수(blunder)!',
+      '실수로 컵을 블런(던)져서 깨뜨린 어처구니없는 실수!'
+    ],
     meaning: '큰 실수, 실수하다',
     example_en: "Don't worry, it was just a small blunder.",
     example_ko: '걱정 마, 그냥 작은 실수였을 뿐이야.'
@@ -60,7 +90,12 @@ const BUILTIN_MNEMONIC_DICT = {
     word: 'curious',
     pronunciation: '[큐리어스 / ˈkjʊəriəs]',
     part_of_speech: '형용사',
-    mnemonic: '호기심에 귤(큐)리(리)얼하게 까보는 궁금한 아이!',
+    mnemonic: '큐리(귀여)운 아기 고양이가 상자 속이 궁금해서 기웃기웃!',
+    mnemonic_candidates: [
+      '큐리(귀여)운 아기 고양이가 상자 속이 궁금해서 기웃기웃!',
+      '질문 큐(Q)! 궁금한 게 너무 많은 호기심(curious) 대장!',
+      '큐리(호기심) 박사님처럼 세상 모든 게 신기하고 궁금해!'
+    ],
     meaning: '호기심 많은, 궁금한',
     example_en: 'I am curious about space.',
     example_ko: '나는 우주에 대해 무척 궁금해.'
@@ -69,7 +104,12 @@ const BUILTIN_MNEMONIC_DICT = {
     word: 'explain',
     pronunciation: '[익스플레인 / ɪkˈspleɪn]',
     part_of_speech: '동사',
-    mnemonic: '이게 왜 이래? 익스플레인(익숙해)지게 설명해 줘!',
+    mnemonic: '이게 왜 이래? 이해하기 쉽게 쏙쏙 익숙하게 설명(explain)해 줘!',
+    mnemonic_candidates: [
+      '이게 왜 이래? 이해하기 쉽게 쏙쏙 익숙하게 설명(explain)해 줘!',
+      '어려운 마술 비법을 알기 쉽게 익스플레인(설명)해 줄게!',
+      '선생님이 칠판에 그림을 그리며 알기 쉽게 설명(explain)해요!'
+    ],
     meaning: '설명하다',
     example_en: 'Can you explain this math question?',
     example_ko: '이 수학 문제 좀 설명해 줄 수 있니?'
@@ -78,7 +118,12 @@ const BUILTIN_MNEMONIC_DICT = {
     word: 'protect',
     pronunciation: '[프로텍트 / prəˈtekt]',
     part_of_speech: '동사',
-    mnemonic: '프로처럼 텍! 막아내며 친구와 자연을 보호하다!',
+    mnemonic: '프로(선수)처럼 딱(텍) 막아내며 친구와 자연을 보호하다!',
+    mnemonic_candidates: [
+      '프로(선수)처럼 딱(텍) 막아내며 친구와 자연을 보호하다!',
+      '방패로 퍽! 텍! 막아서 소중한 지구를 지키고 보호해요!',
+      '헬멧을 프로(단단히) 착용하고 내 머리를 안전하게 보호하다!'
+    ],
     meaning: '보호하다, 지키다',
     example_en: 'We must protect our clean playground.',
     example_ko: '우리는 깨끗한 놀이터를 보호해야 해.'
@@ -87,7 +132,12 @@ const BUILTIN_MNEMONIC_DICT = {
     word: 'courage',
     pronunciation: '[커리지 / ˈkʌrɪdʒ]',
     part_of_speech: '명사',
-    mnemonic: '커다란 이지(길)로 씩씩하게 나아가는 용기!',
+    mnemonic: '두려움을 털어내고 씩씩하게 커지는 용기(courage)!',
+    mnemonic_candidates: [
+      '두려움을 털어내고 씩씩하게 커지는 용기(courage)!',
+      '커다란 길(이지)을 향해 씩씩하게 나아가는 멋진 용기!',
+      '가슴이 쿵쾅거려도 용기(커리지) 내어 무대에 도전해 봐!'
+    ],
     meaning: '용기, 담력',
     example_en: 'Take courage and try your best.',
     example_ko: '용기를 내어 최선을 다해봐.'
@@ -96,7 +146,12 @@ const BUILTIN_MNEMONIC_DICT = {
     word: 'treasure',
     pronunciation: '[트레저 / ˈtreʒər]',
     part_of_speech: '명사',
-    mnemonic: '틀에 갇힌 보석 상자(트레저) 속 반짝이는 보물!',
+    mnemonic: '틀에 갇힌 보석 상자(트레저) 속 반짝이는 진짜 보물!',
+    mnemonic_candidates: [
+      '틀에 갇힌 보석 상자(트레저) 속 반짝이는 진짜 보물!',
+      '흙 속에 묻혀 있던 반짝이는 트레저(보물)를 찾아냈어요!',
+      '매일 함께 웃는 소중한 친구들이 나의 진짜 보물(treasure)이야!'
+    ],
     meaning: '보물, 소중한 것',
     example_en: 'Good friends are my real treasure.',
     example_ko: '좋은 친구들이 나의 진짜 보물이야.'
@@ -105,7 +160,12 @@ const BUILTIN_MNEMONIC_DICT = {
     word: 'patient',
     pronunciation: '[페이션트 / ˈpeɪʃnt]',
     part_of_speech: '형용사',
-    mnemonic: '폐이지 말고 차분하게 기다리는 참을성 있는 친구!',
+    mnemonic: '폐 끼치지 않고 차분하게 내 차례를 기다리는 참을성(patient)!',
+    mnemonic_candidates: [
+      '폐 끼치지 않고 차분하게 내 차례를 기다리는 참을성(patient)!',
+      '패스(포기)하지 않고 끝까지 인내심 있게(patient) 기다려요!',
+      '화내지 않고 마음의 페이스(pace)를 지키며 참을성 있게 기다리기!'
+    ],
     meaning: '참을성 있는, 인내심 있는',
     example_en: 'Please be patient and wait your turn.',
     example_ko: '참을성을 갖고 네 차례를 기다려 보렴.'
@@ -114,7 +174,12 @@ const BUILTIN_MNEMONIC_DICT = {
     word: 'diligent',
     pronunciation: '[딜리전트 / ˈdɪlɪdʒənt]',
     part_of_speech: '형용사',
-    mnemonic: '딜리(데일리) 매일 전력 질주하는 부지런한 사람!',
+    mnemonic: '딜리(데일리) 매일 아침 일찍 일어나는 부지런한(diligent) 사람!',
+    mnemonic_candidates: [
+      '딜리(데일리) 매일 아침 일찍 일어나는 부지런한(diligent) 사람!',
+      '딜(미루기) 하지 않고 바로바로 공부하는 성실하고 부지런한 학생!',
+      '매일 하루도 빠짐없이 전력 질주하는 부지런한 개미 친구!'
+    ],
     meaning: '부지런한, 성실한',
     example_en: 'He is a diligent and smart student.',
     example_ko: '그는 부지런하고 똑똑한 학생이야.'
@@ -123,7 +188,12 @@ const BUILTIN_MNEMONIC_DICT = {
     word: 'generous',
     pronunciation: '[제너러스 / ˈdʒenərəs]',
     part_of_speech: '형용사',
-    mnemonic: '제 너를 너그럽게 안아주는 제너러스한 마음!',
+    mnemonic: '제 친구의 실수도 너그럽게 안아주는 제너러스(너그러운)한 마음!',
+    mnemonic_candidates: [
+      '제 친구의 실수도 너그럽게 안아주는 제너러스(너그러운)한 마음!',
+      '친구들에게 간식을 아낌없이 나눠주는 너그럽고 넉넉한 성품!',
+      '누구에게나 친절하고 제 마음을 넓게 열어주는 관대한 사람!'
+    ],
     meaning: '너그러운, 관대한',
     example_en: 'She is always generous to everyone.',
     example_ko: '그녀는 항상 모두에게 너그러워.'
@@ -131,6 +201,8 @@ const BUILTIN_MNEMONIC_DICT = {
 };
 
 export default function A4Sheet({ sheet, showAnswers = false }) {
+  const [mnemonicIndexMap, setMnemonicIndexMap] = useState({});
+
   if (!sheet) return null;
 
   const s1 = typeof sheet.section1_data === 'string' ? JSON.parse(sheet.section1_data) : sheet.section1_data;
@@ -143,7 +215,7 @@ export default function A4Sheet({ sheet, showAnswers = false }) {
     day: 'numeric'
   });
 
-  // 1단락: 5개 단어 확보 및 고품질 연상문장/발음 보강
+  // 1단락: 5개 단어 확보 및 고품질 연상문장/후보군 보강
   let rawS1Words = s1?.words ? [...s1.words] : [];
   if (rawS1Words.length < 5 && s3?.words) {
     const existing = new Set(rawS1Words.map(w => w.word?.toLowerCase()));
@@ -160,23 +232,25 @@ export default function A4Sheet({ sheet, showAnswers = false }) {
     }
   }
 
-  // 누락되거나 placeholder인 연상문장 및 발음을 사전 데이터로 완전 복구
+  // 어색하거나 억지스러운 연상문장을 3개 후보군 및 최적 문장으로 자동 업그레이드
   const finalS1Words = rawS1Words.slice(0, 5).map(item => {
     const lower = item.word?.toLowerCase();
     const dict = BUILTIN_MNEMONIC_DICT[lower];
 
-    const isPlaceholder = !item.mnemonic || 
+    const isPlaceholderOrForced = !item.mnemonic || 
       item.mnemonic.includes('쏙쏙!') || 
       item.mnemonic.includes('외우기!') || 
+      item.mnemonic.includes('귤') || // 귤리얼하게 퇴출
       item.pronunciation === `[${item.word}]`;
 
-    if (dict && (isPlaceholder || !item.mnemonic)) {
+    if (dict && (isPlaceholderOrForced || !item.mnemonic_candidates)) {
       return {
         ...dict,
         ...item,
         pronunciation: item.pronunciation && item.pronunciation !== `[${item.word}]` ? item.pronunciation : dict.pronunciation,
         part_of_speech: item.part_of_speech && item.part_of_speech !== '단어' ? item.part_of_speech : dict.part_of_speech,
-        mnemonic: isPlaceholder ? dict.mnemonic : (item.mnemonic || dict.mnemonic),
+        mnemonic: isPlaceholderOrForced ? dict.mnemonic : (item.mnemonic || dict.mnemonic),
+        mnemonic_candidates: item.mnemonic_candidates || dict.mnemonic_candidates || [dict.mnemonic],
         meaning: item.meaning || dict.meaning,
         example_en: item.example_en && !item.example_en.includes('I learn the word') ? item.example_en : dict.example_en,
         example_ko: item.example_ko && !item.example_ko.includes('단어를 익혀요') ? item.example_ko : dict.example_ko
@@ -188,6 +262,7 @@ export default function A4Sheet({ sheet, showAnswers = false }) {
       pronunciation: item.pronunciation || `[${item.word}]`,
       part_of_speech: item.part_of_speech || '단어',
       mnemonic: item.mnemonic || `머릿속에 '${item.word}' 소리를 떠올리며 외워요! 뜻: ${item.meaning}`,
+      mnemonic_candidates: item.mnemonic_candidates || (dict?.mnemonic_candidates) || [item.mnemonic || `뜻: ${item.meaning}`],
       meaning: item.meaning,
       example_en: item.example_en || `Remember the word "${item.word}".`,
       example_ko: item.example_ko || `"${item.word}" 단어를 꼭 기억해요.`
@@ -226,50 +301,88 @@ export default function A4Sheet({ sheet, showAnswers = false }) {
     ...s2Words.slice(0, 2).map(w => ({ word: w.word, meaning: w.meaning, source: '2단락' }))
   ];
 
-  // 카드 렌더링 헬퍼 컴포넌트: 단어와 발음기호를 한 줄로 배치!
-  const renderWordCard = (item, key) => (
-    <div
-      key={key}
-      className="border-2 border-amber-200 rounded-lg p-2.5 bg-amber-50/40 relative flex flex-col justify-between"
-    >
-      <div>
-        {/* [요청 반영] 단어와 발음기호를 한 줄로 배치 + 우측 품사 태그 */}
-        <div className="flex items-baseline justify-between gap-1 flex-wrap">
-          <div className="flex items-baseline gap-1.5 min-w-0">
-            <span className="text-base font-black text-amber-900 tracking-tight">
-              {item.word}
-            </span>
-            <span className="text-xs text-amber-700 font-semibold truncate">
-              {item.pronunciation}
-            </span>
+  // 연상 문장 3개 중 하나로 순환 교체하는 핸들러
+  const handleCycleMnemonic = (wordKey, candidates) => {
+    if (!candidates || candidates.length <= 1) return;
+    setMnemonicIndexMap(prev => {
+      const current = prev[wordKey] || 0;
+      return {
+        ...prev,
+        [wordKey]: (current + 1) % candidates.length
+      };
+    });
+  };
+
+  // 카드 렌더링 헬퍼 컴포넌트: 단어와 발음기호를 한 줄로 배치 + 연상 문장 3개 중 선택 가능!
+  const renderWordCard = (item, key) => {
+    const candidates = item.mnemonic_candidates && item.mnemonic_candidates.length > 0
+      ? item.mnemonic_candidates
+      : [item.mnemonic];
+    const currentIdx = (mnemonicIndexMap[item.word] || 0) % candidates.length;
+    const currentMnemonic = candidates[currentIdx] || item.mnemonic;
+
+    return (
+      <div
+        key={key}
+        className="border-2 border-amber-200 rounded-lg p-2.5 bg-amber-50/40 relative flex flex-col justify-between"
+      >
+        <div>
+          {/* 단어와 발음기호를 한 줄로 배치 + 우측 품사 태그 */}
+          <div className="flex items-baseline justify-between gap-1 flex-wrap">
+            <div className="flex items-baseline gap-1.5 min-w-0">
+              <span className="text-base font-black text-amber-900 tracking-tight">
+                {item.word}
+              </span>
+              <span className="text-xs text-amber-700 font-semibold truncate">
+                {item.pronunciation}
+              </span>
+            </div>
+            {item.part_of_speech && (
+              <span className="text-[10px] px-1.5 py-0.5 bg-amber-100 text-amber-800 rounded font-bold shrink-0">
+                {item.part_of_speech}
+              </span>
+            )}
           </div>
-          {item.part_of_speech && (
-            <span className="text-[10px] px-1.5 py-0.5 bg-amber-100 text-amber-800 rounded font-bold shrink-0">
-              {item.part_of_speech}
-            </span>
-          )}
+
+          {/* 연상 문장 박스 (말장난 암기 비법) + 3개 중 교체/선택 버튼 */}
+          <div className="mt-1.5 bg-amber-100/90 text-amber-950 p-2 rounded text-[11px] font-bold border border-amber-300 leading-snug">
+            <div className="flex items-start justify-between gap-1.5">
+              <div className="flex-1">
+                <span className="text-amber-600 mr-1 text-xs">💡</span>
+                <span>{currentMnemonic}</span>
+              </div>
+              {candidates.length > 1 && (
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleCycleMnemonic(item.word, candidates);
+                  }}
+                  title="다른 연상 문장으로 교체하기 (3개 후보)"
+                  className="no-print shrink-0 flex items-center gap-0.5 bg-white/90 hover:bg-white text-amber-900 border border-amber-300 px-1.5 py-0.5 rounded text-[9.5px] font-extrabold shadow-2xs hover:border-amber-500 transition cursor-pointer"
+                >
+                  <span>🔄</span>
+                  <span>{currentIdx + 1}/{candidates.length}</span>
+                </button>
+              )}
+            </div>
+          </div>
+
+          {/* 뜻 */}
+          <div className="mt-1.5 text-xs font-bold text-slate-800 flex items-baseline">
+            <span className="text-slate-500 font-medium mr-1.5 text-xs">뜻:</span>
+            <span className="text-slate-900 font-black text-[13px]">{item.meaning}</span>
+          </div>
         </div>
 
-        {/* 연상 문장 박스 (말장난 암기 비법) */}
-        <div className="mt-1.5 bg-amber-100/90 text-amber-950 p-2 rounded text-[11px] font-bold border border-amber-300 leading-snug">
-          <span className="text-amber-600 mr-1 text-xs">💡</span>
-          {item.mnemonic}
-        </div>
-
-        {/* 뜻 */}
-        <div className="mt-1.5 text-xs font-bold text-slate-800 flex items-baseline">
-          <span className="text-slate-500 font-medium mr-1.5 text-xs">뜻:</span>
-          <span className="text-slate-900 font-black text-[13px]">{item.meaning}</span>
+        {/* 실생활 예문 */}
+        <div className="mt-2 pt-1.5 border-t border-amber-200/70 text-[10px] leading-tight space-y-0.5">
+          <p className="font-semibold text-slate-700 truncate" title={item.example_en}>{item.example_en}</p>
+          <p className="text-slate-500 text-[9px] truncate" title={item.example_ko}>{item.example_ko}</p>
         </div>
       </div>
-
-      {/* 실생활 예문 */}
-      <div className="mt-2 pt-1.5 border-t border-amber-200/70 text-[10px] leading-tight space-y-0.5">
-        <p className="font-semibold text-slate-700 truncate" title={item.example_en}>{item.example_en}</p>
-        <p className="text-slate-500 text-[9px] truncate" title={item.example_ko}>{item.example_ko}</p>
-      </div>
-    </div>
-  );
+    );
+  };
 
   return (
     <div className="a4-page-container bg-white text-slate-800 p-6 md:p-8 mx-auto shadow-2xl rounded-xl border border-slate-200 print:shadow-none print:border-none print:p-0">
