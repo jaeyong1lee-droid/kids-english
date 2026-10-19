@@ -18,7 +18,7 @@
 /* Custom dashed lines for writing areas */
 .writing-line {
   border-bottom: 1.5px dashed #cbd5e1;
-  height: 16px;
+  height: 24px;
 }
 
 /* Print specific styles: 첨부 1 화면 그대로 100% 동일하게 A4 세로 1장 출력 */
