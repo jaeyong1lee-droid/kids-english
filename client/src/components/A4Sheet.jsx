@@ -35,7 +35,7 @@ const BUILTIN_MNEMONIC_DICT = {
     part_of_speech: '동사',
     mnemonic: '익스플로러 타고 미지의 신비한 세계를 탐험하다!',
     meaning: '탐험하다',
-    example_en: "Let's explore the mystery cave together.",
+    example_en: "Let's explore the mystery cave.",
     example_ko: '신비한 동굴을 함께 탐험해 보자.'
   },
   whisper: {
@@ -44,7 +44,7 @@ const BUILTIN_MNEMONIC_DICT = {
     part_of_speech: '동사',
     mnemonic: '비밀을 말할 땐 귓가에 휘~ 스르륵 휘스퍼!',
     meaning: '속삭이다, 귓속말하다',
-    example_en: 'Please whisper quietly in the library.',
+    example_en: 'Please whisper in the library.',
     example_ko: '도서관에서는 조용히 속삭여 줘.'
   },
   blunder: {
@@ -226,53 +226,11 @@ export default function A4Sheet({ sheet, showAnswers = false }) {
     ...s2Words.slice(0, 2).map(w => ({ word: w.word, meaning: w.meaning, source: '2단락' }))
   ];
 
-  // 카드 렌더링 헬퍼 컴포넌트
-  const renderWordCard = (item, key) => (
-    <div
-      key={key}
-      className="border-2 border-amber-200 rounded-lg p-2.5 bg-amber-50/40 relative flex flex-col justify-between"
-    >
-      <div>
-        <div className="flex items-baseline justify-between">
-          <span className="text-base font-black text-amber-900 tracking-tight">
-            {item.word}
-          </span>
-          {item.part_of_speech && (
-            <span className="text-[10px] px-1.5 py-0.5 bg-amber-100 text-amber-800 rounded font-bold">
-              {item.part_of_speech}
-            </span>
-          )}
-        </div>
-        <div className="text-[11px] text-amber-700 font-semibold mt-0.5">
-          {item.pronunciation}
-        </div>
-
-        {/* 연상 문장 박스 (말장난 암기 비법) */}
-        <div className="mt-1 bg-amber-100/90 text-amber-950 p-1.5 rounded text-[11px] font-bold border border-amber-300 leading-snug">
-          <span className="text-amber-600 mr-1 text-xs">💡</span>
-          {item.mnemonic}
-        </div>
-
-        {/* 뜻 */}
-        <div className="mt-1 text-xs font-bold text-slate-800">
-          <span className="text-slate-500 font-medium mr-1.5">뜻:</span>
-          <span className="text-slate-900 text-xs font-black">{item.meaning}</span>
-        </div>
-      </div>
-
-      {/* 실생활 예문 */}
-      <div className="mt-1.5 pt-1 border-t border-amber-200/70 text-[9.5px] leading-tight">
-        <p className="font-semibold text-slate-700">{item.example_en}</p>
-        <p className="text-slate-500 text-[8.5px] mt-0.5">{item.example_ko}</p>
-      </div>
-    </div>
-  );
-
   return (
-    <div className="a4-page-container bg-white text-slate-800 p-6 md:p-8 mx-auto shadow-2xl rounded-xl border border-slate-200 print:shadow-none print:border-none print:p-0">
+    <div className="a4-page-container bg-white text-slate-800 p-5 md:p-6 mx-auto shadow-2xl rounded-xl border border-slate-200 print:shadow-none print:border-none print:p-0">
       
       {/* 1. Header Area */}
-      <header className="border-b-2 border-slate-800 pb-2.5 mb-3">
+      <header className="border-b-2 border-slate-800 pb-2 mb-2.5">
         <div className="flex justify-between items-end">
           <div>
             <div className="flex items-center gap-2">
@@ -286,7 +244,7 @@ export default function A4Sheet({ sheet, showAnswers = false }) {
                 {sheet.theme ? `주제: ${sheet.theme}` : ''}
               </span>
             </div>
-            <h1 className="text-xl md:text-2xl font-black text-slate-900 mt-1 tracking-tight flex items-center gap-1.5">
+            <h1 className="text-xl font-black text-slate-900 mt-1 tracking-tight flex items-center gap-1.5">
               <span>🌟 매일 10분 초등 영단어 &amp; 생활영어</span>
             </h1>
             <p className="text-xs text-slate-600 font-medium mt-0.5">
@@ -301,8 +259,8 @@ export default function A4Sheet({ sheet, showAnswers = false }) {
         </div>
       </header>
 
-      {/* 2. 1단락: 말장난 쏙쏙 연상 영단어 (5개) - [위에 3개, 밑에 2개로 배치] */}
-      <section className="mb-3 avoid-break">
+      {/* 2. 1단락: 말장난 쏙쏙 연상 영단어 (5개) - [한 줄로 가로 5열 배치] */}
+      <section className="mb-2.5 avoid-break">
         <div className="flex items-center justify-between bg-amber-500 text-white px-3 py-1 rounded-md">
           <div className="flex items-center gap-1.5 font-bold text-sm">
             <span className="bg-white text-amber-700 font-black px-1.5 py-0.2 rounded text-xs">
@@ -316,22 +274,53 @@ export default function A4Sheet({ sheet, showAnswers = false }) {
           <span className="text-xs font-medium">연상 기억법 💡</span>
         </div>
 
-        {/* [위에 3개, 밑에 2개로 배치] */}
-        <div className="mt-2 space-y-2">
-          {/* 상단 3개 카드 (가로 3등분) */}
-          <div className="grid grid-cols-3 gap-2">
-            {finalS1Words.slice(0, 3).map((item, idx) => renderWordCard(item, idx))}
-          </div>
+        {/* [한 줄로 5개 배치] */}
+        <div className="grid grid-cols-5 gap-1.5 mt-1.5">
+          {finalS1Words.map((item, idx) => (
+            <div
+              key={idx}
+              className="border-2 border-amber-200 rounded-lg p-2 bg-amber-50/40 relative flex flex-col justify-between"
+            >
+              <div>
+                <div className="flex items-baseline justify-between">
+                  <span className="text-sm font-black text-amber-900 tracking-tight">
+                    {item.word}
+                  </span>
+                  {item.part_of_speech && (
+                    <span className="text-[9px] px-1 py-0.2 bg-amber-100 text-amber-800 rounded font-semibold">
+                      {item.part_of_speech}
+                    </span>
+                  )}
+                </div>
+                <div className="text-[10px] text-amber-700 font-medium">
+                  {item.pronunciation}
+                </div>
 
-          {/* 하단 2개 카드 (가로 2등분) */}
-          <div className="grid grid-cols-2 gap-2">
-            {finalS1Words.slice(3, 5).map((item, idx) => renderWordCard(item, idx + 3))}
-          </div>
+                {/* 연상 문장 박스 (말장난 암기 비법) */}
+                <div className="mt-1 bg-amber-100/90 text-amber-950 p-1.5 rounded text-[10px] font-bold border border-amber-300 leading-tight">
+                  <span className="text-amber-600 mr-0.5">💡</span>
+                  {item.mnemonic}
+                </div>
+
+                {/* 뜻 */}
+                <div className="mt-1 text-[11px] font-bold text-slate-800">
+                  <span className="text-slate-500 font-medium mr-1">뜻:</span>
+                  <span className="text-slate-900 text-xs font-black">{item.meaning}</span>
+                </div>
+              </div>
+
+              {/* 실생활 예문 */}
+              <div className="mt-1 pt-1 border-t border-amber-200/70 text-[9px] leading-tight">
+                <p className="font-semibold text-slate-700 truncate" title={item.example_en}>{item.example_en}</p>
+                <p className="text-slate-500 text-[8.5px] truncate" title={item.example_ko}>{item.example_ko}</p>
+              </div>
+            </div>
+          ))}
         </div>
       </section>
 
-      {/* 3. 2단락: 입에서 술술~ 통문장 생활영어 (2개) - 가로 2열 유지 */}
-      <section className="mb-3 avoid-break">
+      {/* 3. 2단락: 입에서 술술~ 통문장 생활영어 (2개) - 가로 2열 */}
+      <section className="mb-2.5 avoid-break">
         <div className="flex items-center justify-between bg-sky-600 text-white px-3 py-1 rounded-md">
           <div className="flex items-center gap-1.5 font-bold text-sm">
             <span className="bg-white text-sky-800 font-black px-1.5 py-0.2 rounded text-xs">
@@ -345,16 +334,16 @@ export default function A4Sheet({ sheet, showAnswers = false }) {
           <span className="text-xs font-medium">통째로 외우기 🗣️</span>
         </div>
 
-        {/* 가로 2열 grid-cols-2 유지 */}
+        {/* 가로 2열 grid-cols-2 */}
         <div className="grid grid-cols-2 gap-2 mt-1.5">
           {s2?.expressions?.map((expr, idx) => (
             <div
               key={idx}
-              className="border-2 border-sky-200 rounded-lg p-2.5 bg-sky-50/40 relative flex flex-col justify-between"
+              className="border-2 border-sky-200 rounded-lg p-2 bg-sky-50/40 relative flex flex-col justify-between"
             >
               <div>
                 <div className="flex items-center justify-between mb-1">
-                  <span className="text-[11px] font-semibold text-sky-800 bg-sky-100/80 px-1.5 py-0.5 rounded">
+                  <span className="text-[10.5px] font-semibold text-sky-800 bg-sky-100/80 px-1.5 py-0.5 rounded">
                     🎯 {expr.situation}
                   </span>
                   {s2Words[idx]?.word && (
@@ -373,21 +362,21 @@ export default function A4Sheet({ sheet, showAnswers = false }) {
               </div>
 
               {/* Dialog and Tip */}
-              <div className="mt-1.5 pt-1.5 border-t border-sky-200/70 text-[11px]">
+              <div className="mt-1 pt-1 border-t border-sky-200/70 text-[10.5px]">
                 {expr.dialog && (
-                  <div className="bg-white p-1.5 rounded border border-sky-100 mb-1 space-y-0.5 text-[10px]">
-                    <p className="font-semibold text-slate-800">
+                  <div className="bg-white p-1.5 rounded border border-sky-100 mb-1 space-y-0.5 text-[9.5px]">
+                    <p className="font-semibold text-slate-800 leading-tight">
                       <span className="text-sky-600 font-bold mr-1">대화</span> {expr.dialog.speaker_a}
-                      <span className="text-slate-400 text-[9px] ml-1">({expr.dialog.speaker_a_ko})</span>
+                      <span className="text-slate-400 text-[8.5px] ml-1">({expr.dialog.speaker_a_ko})</span>
                     </p>
-                    <p className="font-semibold text-slate-800">
+                    <p className="font-semibold text-slate-800 leading-tight">
                       <span className="text-slate-400 mr-1">응답</span> {expr.dialog.speaker_b}
-                      <span className="text-slate-400 text-[9px] ml-1">({expr.dialog.speaker_b_ko})</span>
+                      <span className="text-slate-400 text-[8.5px] ml-1">({expr.dialog.speaker_b_ko})</span>
                     </p>
                   </div>
                 )}
                 {expr.pronunciation_tip && (
-                  <p className="text-[10px] text-sky-700 font-medium">
+                  <p className="text-[10px] text-sky-700 font-medium leading-tight">
                     💡 <span className="font-bold">발음 꿀팁:</span> {expr.pronunciation_tip}
                   </p>
                 )}
@@ -410,7 +399,7 @@ export default function A4Sheet({ sheet, showAnswers = false }) {
         </div>
 
         {/* User Guide Box */}
-        <div className="bg-emerald-50 border border-emerald-300 text-emerald-950 px-2.5 py-1 rounded-md my-1.5 text-[11px] font-medium leading-relaxed">
+        <div className="bg-emerald-50 border border-emerald-300 text-emerald-950 px-2.5 py-1 rounded-md my-1.5 text-[10.5px] font-medium leading-relaxed">
           <span className="font-bold text-emerald-800">📌 [학습 가이드]: </span>
           공책을 세로로 접어 6칸을 만든 뒤 1칸(영어) → 2칸(한글 뜻) → 1칸을 가리고 3칸(영어) → 4칸(한글 뜻) → 5칸(영어) → 6칸(채점/재도전) 순서로 진행해 보세요.
         </div>
@@ -419,23 +408,23 @@ export default function A4Sheet({ sheet, showAnswers = false }) {
         <div className="border-2 border-slate-700 rounded-lg overflow-hidden">
           <table className="w-full text-left border-collapse table-fixed text-xs">
             <thead>
-              <tr className="bg-slate-800 text-white text-center font-bold text-[11px] divide-x divide-slate-600">
-                <th className="py-1.5 px-1 w-1/6 bg-emerald-800/90">
+              <tr className="bg-slate-800 text-white text-center font-bold text-[10.5px] divide-x divide-slate-600">
+                <th className="py-1 px-1 w-1/6 bg-emerald-800/90">
                   1칸 : 영어 (Word)
                 </th>
-                <th className="py-1.5 px-1 w-1/6">
+                <th className="py-1 px-1 w-1/6">
                   2칸 : 뜻 쓰기
                 </th>
-                <th className="py-1.5 px-1 w-1/6">
+                <th className="py-1 px-1 w-1/6">
                   3칸 : 영어 쓰기
                 </th>
-                <th className="py-1.5 px-1 w-1/6">
+                <th className="py-1 px-1 w-1/6">
                   4칸 : 뜻 쓰기
                 </th>
-                <th className="py-1.5 px-1 w-1/6">
+                <th className="py-1 px-1 w-1/6">
                   5칸 : 영어 쓰기
                 </th>
-                <th className="py-1.5 px-1 w-1/6">
+                <th className="py-1 px-1 w-1/6">
                   6칸 : 채점/재도전
                 </th>
               </tr>
@@ -498,10 +487,10 @@ export default function A4Sheet({ sheet, showAnswers = false }) {
                   {/* Column 6: Grade / Check & Retry */}
                   <td className="py-1 px-2 text-center text-slate-400">
                     <div className="flex items-center justify-center gap-1.5">
-                      <span className="inline-block w-3.5 h-3.5 border border-slate-400 rounded-sm text-[9px] leading-3 text-center">
+                      <span className="inline-block w-3 h-3 border border-slate-400 rounded-sm text-[8px] leading-3 text-center">
                         ✓
                       </span>
-                      <div className="writing-line flex-1 max-w-[45px]"></div>
+                      <div className="writing-line flex-1 max-w-[40px]"></div>
                     </div>
                   </td>
                 </tr>

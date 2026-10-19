@@ -166,7 +166,7 @@ export default function App() {
     : 1;
 
   return (
-    <div className="min-h-screen bg-slate-100 flex flex-col">
+    <div className="min-h-screen bg-slate-100 flex flex-col print:bg-white print:min-h-0 print:block print:p-0 print:m-0">
       {/* Top Navbar */}
       <Navbar
         currentDay={currentSheet?.day_number}
@@ -182,7 +182,7 @@ export default function App() {
       />
 
       {/* Main Content Area */}
-      <main className="flex-1 py-6 px-4 max-w-5xl mx-auto w-full">
+      <main className="flex-1 py-6 px-4 max-w-5xl mx-auto w-full print:p-0 print:m-0 print:max-w-none print:w-full">
         
         {/* Error notification */}
         {errorMsg && (

@@ -18,14 +18,14 @@
 /* Custom dashed lines for writing areas */
 .writing-line {
   border-bottom: 1.5px dashed #cbd5e1;
-  height: 22px;
+  height: 16px;
 }
 
-/* Print specific styles: 첨부 1 화면 그대로 100% 동일하게 출력 */
+/* Print specific styles: 첨부 1 화면 그대로 100% 동일하게 A4 세로 1장 출력 */
 @media print {
   @page {
     size: A4 portrait;
-    margin: 8mm 10mm;
+    margin: 6mm 8mm;
   }
 
   * {
@@ -38,6 +38,8 @@
     margin: 0 !important;
     padding: 0 !important;
     width: 100% !important;
+    height: auto !important;
+    overflow: visible !important;
   }
 
   .no-print {
@@ -48,12 +50,17 @@
     width: 100% !important;
     max-width: 100% !important;
     min-height: auto !important;
+    max-height: 282mm !important;
     box-shadow: none !important;
     border: none !important;
     margin: 0 auto !important;
     padding: 0 !important;
     page-break-after: avoid !important;
     break-after: avoid !important;
+    page-break-before: avoid !important;
+    break-before: avoid !important;
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
   }
 
   .avoid-break {
