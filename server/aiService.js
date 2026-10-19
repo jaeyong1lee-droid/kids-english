@@ -57,8 +57,8 @@ export async function generateDailyWorksheet({
 아이들이 영어를 무서워하지 않고 재미있게 웃으면서 매일 10분씩 스스로 공부할 수 있도록 유머러스하고 효과적인 A4 1장 맞춤 학습지를 제작합니다.
 
 [학습지 3단락 핵심 구성 규칙]:
-1단락: 단어를 한글 발음과 접목하여 쉽게 외우는 "연상 암기법" 영단어 3개
-  - 초등 3~6학년 수준에 꼭 맞춘 영단어 3개 선정.
+1단락: 단어를 한글 발음과 접목하여 쉽게 외우는 "연상 암기법" 영단어 5개
+  - 초등 3~6학년 수준에 꼭 맞춘 영단어 5개 선정.
   - 한글 발음/소리와 단어의 뜻을 절묘하고 유머러스하게 연결한 "말장난/연상 기억법" 비법 문장을 작성합니다.
   - 예시: "실수하면 불난다! -> blunder (블런더: 큰 실수)", "보호막을 퍽! 텍! 치며 지키다 -> protect (프로텍트: 보호하다)"
   - 단어, 한글 발음 표기, 품사, 연상 비법 문장, 우리말 뜻, 초등학생 눈높이의 친근한 실생활 예문과 해석 포함.
@@ -135,7 +135,7 @@ ${reviewWordsPrompt}
       }
     ]
   }
-}`;
+} (주의: section1.words는 반드시 5개, section2.expressions는 2개, section3.words는 총 7개여야 합니다)`;
 
   let lastError = null;
 
@@ -157,8 +157,8 @@ ${reviewWordsPrompt}
         const text = result.response.text();
         const data = cleanAndParseJson(text);
 
-        // Basic schema validation
-        if (data && data.section1?.words?.length === 3 && data.section2?.expressions?.length === 2 && data.section3?.words?.length >= 5) {
+        // Basic schema validation: section1 has 5 words, section2 has 2 expressions
+        if (data && data.section1?.words?.length >= 5 && data.section2?.expressions?.length >= 2) {
           console.log(`[AI Generation] Successfully generated Day ${dayNumber} worksheet with ${modelName}!`);
           return data;
         } else {
@@ -189,8 +189,8 @@ function getFallbackWorksheet(dayNumber, theme, gradeLevel, pastWords) {
           word: 'blunder',
           pronunciation: '[블런더 / ˈblʌndər]',
           part_of_speech: '명사',
-          mnemonic: '실수하면 불난다! 실수해서 불나지 않게 조심!',
-          meaning: '큰 실수, 어처구니없는 실수',
+          mnemonic: '실수하면 불난다! 실수해서 큰불이 났네!',
+          meaning: '큰 실수, 실수하다',
           example_en: 'Everyone makes a blunder sometimes.',
           example_ko: '누구나 가끔은 큰 실수를 해.'
         },
@@ -198,19 +198,37 @@ function getFallbackWorksheet(dayNumber, theme, gradeLevel, pastWords) {
           word: 'curious',
           pronunciation: '[큐리어스 / ˈkjʊəriəs]',
           part_of_speech: '형용사',
-          mnemonic: '호기심에 귤(큐)리(리)얼하게 까보는 궁금한 아이',
+          mnemonic: '호기심에 귤(큐)리(리)얼하게 까보는 궁금한 아이!',
           meaning: '호기심 많은, 궁금한',
           example_en: 'I am curious about space.',
           example_ko: '나는 우주에 대해 무척 궁금해.'
         },
         {
-          word: 'whisper',
-          pronunciation: '[휘스퍼 / ˈwɪspər]',
+          word: 'explain',
+          pronunciation: '[익스플레인 / ɪkˈspleɪn]',
           part_of_speech: '동사',
-          mnemonic: '비밀을 말할 땐 휘~ 스르륵 귓가에 휘스퍼!',
-          meaning: '속삭이다, 귓속말하다',
-          example_en: 'Please whisper in the library.',
-          example_ko: '도서관에서는 귓속말로 속삭여 주세요.'
+          mnemonic: '이게 왜 이래? 익스플레인(익숙해)지게 설명해 줘!',
+          meaning: '설명하다',
+          example_en: 'Can you explain this math question?',
+          example_ko: '이 수학 문제 좀 설명해 줄 수 있니?'
+        },
+        {
+          word: 'protect',
+          pronunciation: '[프로텍트 / prəˈtekt]',
+          part_of_speech: '동사',
+          mnemonic: '프로처럼 텍! 막아내며 친구와 자연을 보호하다!',
+          meaning: '보호하다, 지키다',
+          example_en: 'We must protect our clean school.',
+          example_ko: '우리는 깨끗한 학교를 보호해야 해.'
+        },
+        {
+          word: 'courage',
+          pronunciation: '[커리지 / ˈkʌrɪdʒ]',
+          part_of_speech: '명사',
+          mnemonic: '커다란 이지(길)로 씩씩하게 나아가는 용기!',
+          meaning: '용기, 담력',
+          example_en: 'Take courage and try your best.',
+          example_ko: '용기를 내어 최선을 다해봐.'
         }
       ],
       s2: [
@@ -218,6 +236,8 @@ function getFallbackWorksheet(dayNumber, theme, gradeLevel, pastWords) {
           situation: '수업 중이나 대화 중 궁금한 것이 생겼을 때',
           english: 'Let me ask something.',
           korean: '질문 하나 해도 될까요?',
+          key_word: 'ask',
+          key_word_meaning: '물어보다, 질문하다',
           pronunciation_tip: "'Let me'는 '렘미'처럼 부드럽고 자연스럽게 붙여 읽어요!",
           dialog: {
             speaker_a: 'A: Teacher, let me ask something.',
@@ -228,97 +248,109 @@ function getFallbackWorksheet(dayNumber, theme, gradeLevel, pastWords) {
         },
         {
           situation: '친구와 함께 순서를 지켜 게임이나 놀이를 할 때',
-          english: 'Let\'s take turns.',
+          english: "Let's take turns.",
           korean: '우리 차례대로 번갈아 가며 하자.',
+          key_word: 'turns',
+          key_word_meaning: '차례를 번갈아 하기',
           pronunciation_tip: "'take turns(테익 턴즈)'는 '차례를 바꾸다'라는 뜻이에요!",
           dialog: {
             speaker_a: 'A: Whose turn is it now?',
             speaker_a_ko: '이제 누구 차례야?',
-            speaker_b: 'B: It\'s my turn, let\'s take turns!',
+            speaker_b: "B: It's my turn, let's take turns!",
             speaker_b_ko: '내 차례야, 우리 사이좋게 번갈아 하자!'
           }
         }
-      ],
-      extraWords: [
-        { word: 'protect', meaning: '보호하다, 지키다' },
-        { word: 'courage', meaning: '용기' },
-        { word: 'diligent', meaning: '부지런한' },
-        { word: 'treasure', meaning: '보물' }
       ]
     },
     {
-      theme: '자연과 신나는 모험',
-      title: '용기 내어 새로운 세계를 탐험하자!',
+      theme: '친구와 함께하는 놀이와 게임',
+      title: '친구와 신나게 놀자! 게임 영어 완전 정복!',
       s1: [
         {
-          word: 'courage',
-          pronunciation: '[커리지 / ˈkʌrɪdʒ]',
+          word: 'rule',
+          pronunciation: '[룰 / ruːl]',
           part_of_speech: '명사',
-          mnemonic: '커다란 이지(길)를 향해 씩씩하게 나아가는 용기!',
-          meaning: '용기, 담력',
-          example_en: 'Take courage and try your best.',
-          example_ko: '용기를 내어 최선을 다해봐.'
+          mnemonic: "루루루~ 노래 부르며 규칙을 지켜요! 게임에도 '룰'이 중요해!",
+          meaning: '규칙',
+          example_en: "Let's learn the rules of this game.",
+          example_ko: '이 게임의 규칙을 배워보자.'
         },
         {
-          word: 'protect',
-          pronunciation: '[프로텍트 / prəˈtekt]',
+          word: 'win',
+          pronunciation: '[윈 / wɪn]',
           part_of_speech: '동사',
-          mnemonic: '프로(선수)처럼 텍(딱) 막아서 지구를 보호하다!',
-          meaning: '보호하다, 지키다',
-          example_en: 'We must protect our clean nature.',
-          example_ko: '우리는 깨끗한 자연을 보호해야 해.'
+          mnemonic: "친구랑 게임해서 이겨 '윈윈'하는 기분! 내가 '윈'하고 싶어!",
+          meaning: '이기다',
+          example_en: 'I want to win the game!',
+          example_ko: '나는 그 게임에서 이기고 싶어!'
         },
         {
-          word: 'treasure',
-          pronunciation: '[트레저 / ˈtreʒər]',
-          part_of_speech: '명사',
-          mnemonic: '틀에 갇힌 보석 상자(트레저) 속 반짝이는 보물!',
-          meaning: '보물, 귀중한 것',
-          example_en: 'Good friends are my real treasure.',
-          example_ko: '좋은 친구들이 나의 진짜 보물이야.'
+          word: 'share',
+          pronunciation: '[쉐어 / ʃeər]',
+          part_of_speech: '동사',
+          mnemonic: "쉐프가 맛있는 음식을 '쉐어(나눠)' 주네! 친구랑 장난감을 '쉐어'하자!",
+          meaning: '공유하다, 나누다',
+          example_en: 'Can you share your toys with me?',
+          example_ko: '나랑 네 장난감을 같이 쓸 수 있니?'
+        },
+        {
+          word: 'explore',
+          pronunciation: '[익스플로어 / ɪkˈsplɔːr]',
+          part_of_speech: '동사',
+          mnemonic: '익스플로러 타고 미지의 신비한 세계를 탐험하다!',
+          meaning: '탐험하다',
+          example_en: "Let's explore the mystery cave together.",
+          example_ko: '신비한 동굴을 함께 탐험해 보자.'
+        },
+        {
+          word: 'whisper',
+          pronunciation: '[휘스퍼 / ˈwɪspər]',
+          part_of_speech: '동사',
+          mnemonic: '비밀을 말할 땐 귓가에 휘~ 스르륵 휘스퍼!',
+          meaning: '속삭이다, 귓속말하다',
+          example_en: 'Please whisper quietly in the library.',
+          example_ko: '도서관에서는 조용히 속삭여 줘.'
         }
       ],
       s2: [
         {
-          situation: '친구에게 도움을 청하거나 도움이 필요한지 물어볼 때',
-          english: 'Can you give me a hand?',
-          korean: '나 좀 도와줄 수 있니?',
-          pronunciation_tip: "'give me a hand'는 손을 달라는 게 아니라 '도와달라'는 뜻이에요!",
+          situation: '친구에게 같이 게임하자고 제안할 때',
+          english: "Let's play a game together!",
+          korean: '우리 같이 게임하자!',
+          key_word: 'together',
+          key_word_meaning: '함께, 같이',
+          pronunciation_tip: "'Let's'와 'play'를 붙여 '렛츠플레이'처럼 부드럽게! 'together'는 '트게더'에 가깝게 발음해요!",
           dialog: {
-            speaker_a: 'A: This box is heavy. Can you give me a hand?',
-            speaker_a_ko: '이 상자가 무거워. 나 좀 도와줄 수 있어?',
-            speaker_b: 'B: No problem! I\'ll help you.',
-            speaker_b_ko: '문제없지! 내가 도와줄게.'
+            speaker_a: 'A: What should we do now?',
+            speaker_a_ko: '우리 지금 뭐 할까?',
+            speaker_b: "B: Let's play a game together!",
+            speaker_b_ko: '우리 같이 게임하자!'
           }
         },
         {
-          situation: '친구를 칭찬하고 응원해 줄 때',
-          english: 'You did a great job today!',
-          korean: '오늘 정말 잘했어!',
-          pronunciation_tip: "'great job(그레잇 잡)'을 밝고 신나는 톤으로 외쳐주세요!",
+          situation: '게임이나 놀이에서 자기 차례가 왔을 때',
+          english: "It's my turn!",
+          korean: '내 차례야!',
+          key_word: 'turn',
+          key_word_meaning: '차례, 순서',
+          pronunciation_tip: "'It's my'를 '이츠마이'처럼 빠르게 연결해서 말하면 더 자연스러워요!",
           dialog: {
-            speaker_a: 'A: I finished my English homework!',
-            speaker_a_ko: '나 영어 숙제 다 끝냈어!',
-            speaker_b: 'B: Wow, you did a great job today!',
-            speaker_b_ko: '와, 오늘 정말 잘했어!'
+            speaker_a: 'A: Whose turn is it now?',
+            speaker_a_ko: '이제 누구 차례지?',
+            speaker_b: "B: It's my turn! I'll throw the dice.",
+            speaker_b_ko: '내 차례야! 내가 주사위를 던질게.'
           }
         }
-      ],
-      extraWords: [
-        { word: 'blunder', meaning: '큰 실수' },
-        { word: 'whisper', meaning: '속삭이다' },
-        { word: 'curious', meaning: '호기심 많은' },
-        { word: 'patient', meaning: '참을성 있는' }
       ]
     }
   ];
 
   const chosen = fallbackThemes[(dayNumber - 1) % fallbackThemes.length];
 
-  // Mix Section 1 words + extra/past words into Section 3
+  // 3단락: 1단락 5단어 + 2단락 2단어 = 총 7단어
   const s3Words = [
-    ...chosen.s1.map(w => ({ word: w.word, meaning: w.meaning, is_today_new: true })),
-    ...chosen.extraWords.map(w => ({ word: w.word, meaning: w.meaning, is_today_new: false }))
+    ...chosen.s1.map(w => ({ word: w.word, meaning: w.meaning, source: '1단락' })),
+    ...chosen.s2.map(e => ({ word: e.key_word, meaning: e.key_word_meaning, source: '2단락' }))
   ];
 
   return {
@@ -327,7 +359,7 @@ function getFallbackWorksheet(dayNumber, theme, gradeLevel, pastWords) {
     theme: chosen.theme,
     grade_level: gradeLevel,
     section1: {
-      title: '1단락: 말장난 쏙쏙 연상 영단어 (3단어)',
+      title: '1단락: 말장난 쏙쏙 연상 영단어 (5단어)',
       description: '한글 소리와 뜻을 연결해 한 번만 읽어도 머리에 쏙 들어오는 마법 영단어!',
       words: chosen.s1
     },
@@ -337,9 +369,9 @@ function getFallbackWorksheet(dayNumber, theme, gradeLevel, pastWords) {
       expressions: chosen.s2
     },
     section3: {
-      title: '3단락: 공책 반접기 4단 단어 암기장 (4열 표)',
-      guide: '공책을 세로로 접어 4칸을 만든 뒤 1칸(영어) → 2칸(한글 뜻 쓰기) → 1칸을 접어서 가리고 2칸의 한글만 보며 3칸(영어 쓰기) 순서로 진행해 보세요.',
-      columns: ['1칸: 영어 단어', '2칸: 뜻 쓰기', '3칸: 가리고 영어 쓰기', '4칸: 채점 & 재도전'],
+      title: '3단락: 공책 반접기 6단 단어 암기장 (6열 표)',
+      guide: '공책을 세로로 접어 6칸을 만든 뒤 1칸(영어) → 2칸(한글 뜻) → 1칸을 가리고 3칸(영어) → 4칸(한글 뜻) → 5칸(영어) → 6칸(채점/재도전) 순서로 진행해 보세요.',
+      columns: ['1칸: 영어 (Word)', '2칸: 뜻 쓰기', '3칸: 영어 쓰기', '4칸: 뜻 쓰기', '5칸: 영어 쓰기', '6칸: 채점/재도전'],
       words: s3Words
     }
   };

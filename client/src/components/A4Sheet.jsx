@@ -1,5 +1,135 @@
 import React from 'react';
 
+// 풍부한 초등 필수 어휘 연상 및 발음 사전 (누락/대체 방지)
+const BUILTIN_MNEMONIC_DICT = {
+  rule: {
+    word: 'rule',
+    pronunciation: '[룰 / ruːl]',
+    part_of_speech: '명사',
+    mnemonic: "루루루~ 노래 부르며 규칙을 지켜요! 게임에도 '룰'이 중요해!",
+    meaning: '규칙',
+    example_en: "Let's learn the rules of this game.",
+    example_ko: '이 게임의 규칙을 배워보자.'
+  },
+  win: {
+    word: 'win',
+    pronunciation: '[윈 / wɪn]',
+    part_of_speech: '동사',
+    mnemonic: "친구랑 게임해서 이겨 '윈윈'하는 기분! 내가 '윈'하고 싶어!",
+    meaning: '이기다',
+    example_en: 'I want to win the game!',
+    example_ko: '나는 그 게임에서 이기고 싶어!'
+  },
+  share: {
+    word: 'share',
+    pronunciation: '[쉐어 / ʃeər]',
+    part_of_speech: '동사',
+    mnemonic: "쉐프가 맛있는 음식을 '쉐어(나눠)' 주네! 친구랑 장난감을 '쉐어'하자!",
+    meaning: '공유하다, 나누다',
+    example_en: 'Can you share your toys with me?',
+    example_ko: '나랑 네 장난감을 같이 쓸 수 있니?'
+  },
+  explore: {
+    word: 'explore',
+    pronunciation: '[익스플로어 / ɪkˈsplɔːr]',
+    part_of_speech: '동사',
+    mnemonic: '익스플로러 타고 미지의 신비한 세계를 탐험하다!',
+    meaning: '탐험하다',
+    example_en: "Let's explore the mystery cave together.",
+    example_ko: '신비한 동굴을 함께 탐험해 보자.'
+  },
+  whisper: {
+    word: 'whisper',
+    pronunciation: '[휘스퍼 / ˈwɪspər]',
+    part_of_speech: '동사',
+    mnemonic: '비밀을 말할 땐 귓가에 휘~ 스르륵 휘스퍼!',
+    meaning: '속삭이다, 귓속말하다',
+    example_en: 'Please whisper quietly in the library.',
+    example_ko: '도서관에서는 조용히 속삭여 줘.'
+  },
+  blunder: {
+    word: 'blunder',
+    pronunciation: '[블런더 / ˈblʌndər]',
+    part_of_speech: '명사',
+    mnemonic: '실수하면 불난다! 실수해서 큰불이 났네!',
+    meaning: '큰 실수, 실수하다',
+    example_en: "Don't worry, it was just a small blunder.",
+    example_ko: '걱정 마, 그냥 작은 실수였을 뿐이야.'
+  },
+  curious: {
+    word: 'curious',
+    pronunciation: '[큐리어스 / ˈkjʊəriəs]',
+    part_of_speech: '형용사',
+    mnemonic: '호기심에 귤(큐)리(리)얼하게 까보는 궁금한 아이!',
+    meaning: '호기심 많은, 궁금한',
+    example_en: 'I am curious about space.',
+    example_ko: '나는 우주에 대해 무척 궁금해.'
+  },
+  explain: {
+    word: 'explain',
+    pronunciation: '[익스플레인 / ɪkˈspleɪn]',
+    part_of_speech: '동사',
+    mnemonic: '이게 왜 이래? 익스플레인(익숙해)지게 설명해 줘!',
+    meaning: '설명하다',
+    example_en: 'Can you explain this math question?',
+    example_ko: '이 수학 문제 좀 설명해 줄 수 있니?'
+  },
+  protect: {
+    word: 'protect',
+    pronunciation: '[프로텍트 / prəˈtekt]',
+    part_of_speech: '동사',
+    mnemonic: '프로처럼 텍! 막아내며 친구와 자연을 보호하다!',
+    meaning: '보호하다, 지키다',
+    example_en: 'We must protect our clean playground.',
+    example_ko: '우리는 깨끗한 놀이터를 보호해야 해.'
+  },
+  courage: {
+    word: 'courage',
+    pronunciation: '[커리지 / ˈkʌrɪdʒ]',
+    part_of_speech: '명사',
+    mnemonic: '커다란 이지(길)로 씩씩하게 나아가는 용기!',
+    meaning: '용기, 담력',
+    example_en: 'Take courage and try your best.',
+    example_ko: '용기를 내어 최선을 다해봐.'
+  },
+  treasure: {
+    word: 'treasure',
+    pronunciation: '[트레저 / ˈtreʒər]',
+    part_of_speech: '명사',
+    mnemonic: '틀에 갇힌 보석 상자(트레저) 속 반짝이는 보물!',
+    meaning: '보물, 소중한 것',
+    example_en: 'Good friends are my real treasure.',
+    example_ko: '좋은 친구들이 나의 진짜 보물이야.'
+  },
+  patient: {
+    word: 'patient',
+    pronunciation: '[페이션트 / ˈpeɪʃnt]',
+    part_of_speech: '형용사',
+    mnemonic: '폐이지 말고 차분하게 기다리는 참을성 있는 친구!',
+    meaning: '참을성 있는, 인내심 있는',
+    example_en: 'Please be patient and wait your turn.',
+    example_ko: '참을성을 갖고 네 차례를 기다려 보렴.'
+  },
+  diligent: {
+    word: 'diligent',
+    pronunciation: '[딜리전트 / ˈdɪlɪdʒənt]',
+    part_of_speech: '형용사',
+    mnemonic: '딜리(데일리) 매일 전력 질주하는 부지런한 사람!',
+    meaning: '부지런한, 성실한',
+    example_en: 'He is a diligent and smart student.',
+    example_ko: '그는 부지런하고 똑똑한 학생이야.'
+  },
+  generous: {
+    word: 'generous',
+    pronunciation: '[제너러스 / ˈdʒenərəs]',
+    part_of_speech: '형용사',
+    mnemonic: '제 너를 너그럽게 안아주는 제너러스한 마음!',
+    meaning: '너그러운, 관대한',
+    example_en: 'She is always generous to everyone.',
+    example_ko: '그녀는 항상 모두에게 너그러워.'
+  }
+};
+
 export default function A4Sheet({ sheet, showAnswers = false }) {
   if (!sheet) return null;
 
@@ -13,27 +143,56 @@ export default function A4Sheet({ sheet, showAnswers = false }) {
     day: 'numeric'
   });
 
-  // 1단락: 5개 단어 확보
-  let s1Words = s1?.words ? [...s1.words] : [];
-  if (s1Words.length < 5 && s3?.words) {
-    const existing = new Set(s1Words.map(w => w.word.toLowerCase()));
+  // 1단락: 5개 단어 확보 및 고품질 연상문장/발음 보강
+  let rawS1Words = s1?.words ? [...s1.words] : [];
+  if (rawS1Words.length < 5 && s3?.words) {
+    const existing = new Set(rawS1Words.map(w => w.word?.toLowerCase()));
     for (const w of s3.words) {
-      if (s1Words.length >= 5) break;
-      if (!existing.has(w.word.toLowerCase())) {
-        s1Words.push({
+      if (rawS1Words.length >= 5) break;
+      const lower = w.word?.toLowerCase();
+      if (lower && !existing.has(lower)) {
+        rawS1Words.push({
           word: w.word,
-          pronunciation: `[${w.word}]`,
-          part_of_speech: '단어',
-          mnemonic: `${w.word} 외우기! 뜻: ${w.meaning}`,
-          meaning: w.meaning,
-          example_en: `Practice the word "${w.word}".`,
-          example_ko: `"${w.word}" 단어를 익혀요.`
+          meaning: w.meaning
         });
-        existing.add(w.word.toLowerCase());
+        existing.add(lower);
       }
     }
   }
-  const finalS1Words = s1Words.slice(0, 5);
+
+  // 누락되거나 placeholder인 연상문장 및 발음을 사전 데이터로 완전 복구
+  const finalS1Words = rawS1Words.slice(0, 5).map(item => {
+    const lower = item.word?.toLowerCase();
+    const dict = BUILTIN_MNEMONIC_DICT[lower];
+
+    const isPlaceholder = !item.mnemonic || 
+      item.mnemonic.includes('쏙쏙!') || 
+      item.mnemonic.includes('외우기!') || 
+      item.pronunciation === `[${item.word}]`;
+
+    if (dict && (isPlaceholder || !item.mnemonic)) {
+      return {
+        ...dict,
+        ...item,
+        pronunciation: item.pronunciation && item.pronunciation !== `[${item.word}]` ? item.pronunciation : dict.pronunciation,
+        part_of_speech: item.part_of_speech && item.part_of_speech !== '단어' ? item.part_of_speech : dict.part_of_speech,
+        mnemonic: isPlaceholder ? dict.mnemonic : (item.mnemonic || dict.mnemonic),
+        meaning: item.meaning || dict.meaning,
+        example_en: item.example_en && !item.example_en.includes('I learn the word') ? item.example_en : dict.example_en,
+        example_ko: item.example_ko && !item.example_ko.includes('단어를 익혀요') ? item.example_ko : dict.example_ko
+      };
+    }
+
+    return {
+      word: item.word,
+      pronunciation: item.pronunciation || `[${item.word}]`,
+      part_of_speech: item.part_of_speech || '단어',
+      mnemonic: item.mnemonic || `머릿속에 '${item.word}' 소리를 떠올리며 외워요! 뜻: ${item.meaning}`,
+      meaning: item.meaning,
+      example_en: item.example_en || `Remember the word "${item.word}".`,
+      example_ko: item.example_ko || `"${item.word}" 단어를 꼭 기억해요.`
+    };
+  });
 
   // 2단락: 나온 표현에서 핵심 단어 2개 선별
   const s2Words = [];
@@ -67,11 +226,53 @@ export default function A4Sheet({ sheet, showAnswers = false }) {
     ...s2Words.slice(0, 2).map(w => ({ word: w.word, meaning: w.meaning, source: '2단락' }))
   ];
 
+  // 카드 렌더링 헬퍼 컴포넌트
+  const renderWordCard = (item, key) => (
+    <div
+      key={key}
+      className="border-2 border-amber-200 rounded-lg p-2.5 bg-amber-50/40 relative flex flex-col justify-between"
+    >
+      <div>
+        <div className="flex items-baseline justify-between">
+          <span className="text-base font-black text-amber-900 tracking-tight">
+            {item.word}
+          </span>
+          {item.part_of_speech && (
+            <span className="text-[10px] px-1.5 py-0.5 bg-amber-100 text-amber-800 rounded font-bold">
+              {item.part_of_speech}
+            </span>
+          )}
+        </div>
+        <div className="text-[11px] text-amber-700 font-semibold mt-0.5">
+          {item.pronunciation}
+        </div>
+
+        {/* 연상 문장 박스 (말장난 암기 비법) */}
+        <div className="mt-1 bg-amber-100/90 text-amber-950 p-1.5 rounded text-[11px] font-bold border border-amber-300 leading-snug">
+          <span className="text-amber-600 mr-1 text-xs">💡</span>
+          {item.mnemonic}
+        </div>
+
+        {/* 뜻 */}
+        <div className="mt-1 text-xs font-bold text-slate-800">
+          <span className="text-slate-500 font-medium mr-1.5">뜻:</span>
+          <span className="text-slate-900 text-xs font-black">{item.meaning}</span>
+        </div>
+      </div>
+
+      {/* 실생활 예문 */}
+      <div className="mt-1.5 pt-1 border-t border-amber-200/70 text-[9.5px] leading-tight">
+        <p className="font-semibold text-slate-700">{item.example_en}</p>
+        <p className="text-slate-500 text-[8.5px] mt-0.5">{item.example_ko}</p>
+      </div>
+    </div>
+  );
+
   return (
     <div className="a4-page-container bg-white text-slate-800 p-6 md:p-8 mx-auto shadow-2xl rounded-xl border border-slate-200 print:shadow-none print:border-none print:p-0">
       
       {/* 1. Header Area */}
-      <header className="border-b-2 border-slate-800 pb-3 mb-3.5">
+      <header className="border-b-2 border-slate-800 pb-2.5 mb-3">
         <div className="flex justify-between items-end">
           <div>
             <div className="flex items-center gap-2">
@@ -100,8 +301,8 @@ export default function A4Sheet({ sheet, showAnswers = false }) {
         </div>
       </header>
 
-      {/* 2. 1단락: 말장난 쏙쏙 연상 영단어 (5개) - 가로 5열 유지 */}
-      <section className="mb-3.5 avoid-break">
+      {/* 2. 1단락: 말장난 쏙쏙 연상 영단어 (5개) - [위에 3개, 밑에 2개로 배치] */}
+      <section className="mb-3 avoid-break">
         <div className="flex items-center justify-between bg-amber-500 text-white px-3 py-1 rounded-md">
           <div className="flex items-center gap-1.5 font-bold text-sm">
             <span className="bg-white text-amber-700 font-black px-1.5 py-0.2 rounded text-xs">
@@ -115,53 +316,22 @@ export default function A4Sheet({ sheet, showAnswers = false }) {
           <span className="text-xs font-medium">연상 기억법 💡</span>
         </div>
 
-        {/* 가로 5열 grid-cols-5 유지 */}
-        <div className="grid grid-cols-5 gap-1.5 mt-1.5">
-          {finalS1Words.map((item, idx) => (
-            <div
-              key={idx}
-              className="border-2 border-amber-200 rounded-lg p-2 bg-amber-50/40 relative flex flex-col justify-between"
-            >
-              <div>
-                <div className="flex items-baseline justify-between">
-                  <span className="text-sm font-black text-amber-900 tracking-tight">
-                    {item.word}
-                  </span>
-                  {item.part_of_speech && (
-                    <span className="text-[9px] px-1 py-0.2 bg-amber-100 text-amber-800 rounded font-semibold">
-                      {item.part_of_speech}
-                    </span>
-                  )}
-                </div>
-                <div className="text-[10px] text-amber-700 font-medium">
-                  {item.pronunciation}
-                </div>
+        {/* [위에 3개, 밑에 2개로 배치] */}
+        <div className="mt-2 space-y-2">
+          {/* 상단 3개 카드 (가로 3등분) */}
+          <div className="grid grid-cols-3 gap-2">
+            {finalS1Words.slice(0, 3).map((item, idx) => renderWordCard(item, idx))}
+          </div>
 
-                {/* Mnemonic Sentence */}
-                <div className="mt-1 bg-amber-100/90 text-amber-950 p-1.5 rounded text-[10px] font-bold border border-amber-300 leading-tight">
-                  <span className="text-amber-600 mr-0.5">💡</span>
-                  {item.mnemonic}
-                </div>
-
-                {/* Meaning */}
-                <div className="mt-1 text-[11px] font-bold text-slate-800">
-                  <span className="text-slate-500 font-medium mr-1">뜻:</span>
-                  <span className="text-slate-900 text-xs font-black">{item.meaning}</span>
-                </div>
-              </div>
-
-              {/* Example */}
-              <div className="mt-1.5 pt-1 border-t border-amber-200/70 text-[9px] leading-tight">
-                <p className="font-semibold text-slate-700 truncate" title={item.example_en}>{item.example_en}</p>
-                <p className="text-slate-500 text-[8.5px] truncate" title={item.example_ko}>{item.example_ko}</p>
-              </div>
-            </div>
-          ))}
+          {/* 하단 2개 카드 (가로 2등분) */}
+          <div className="grid grid-cols-2 gap-2">
+            {finalS1Words.slice(3, 5).map((item, idx) => renderWordCard(item, idx + 3))}
+          </div>
         </div>
       </section>
 
       {/* 3. 2단락: 입에서 술술~ 통문장 생활영어 (2개) - 가로 2열 유지 */}
-      <section className="mb-3.5 avoid-break">
+      <section className="mb-3 avoid-break">
         <div className="flex items-center justify-between bg-sky-600 text-white px-3 py-1 rounded-md">
           <div className="flex items-center gap-1.5 font-bold text-sm">
             <span className="bg-white text-sky-800 font-black px-1.5 py-0.2 rounded text-xs">
