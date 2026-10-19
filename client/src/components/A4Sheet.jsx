@@ -412,33 +412,27 @@ export default function A4Sheet({ sheet, showAnswers = false }) {
           <span className="text-xs font-medium">1단락 5단어 + 2단락 2단어 복습 ✍️</span>
         </div>
 
-        {/* User Guide Box */}
-        <div className="bg-emerald-50 border border-emerald-300 text-emerald-950 px-2.5 py-1 rounded-md my-1.5 text-[10.5px] font-medium leading-relaxed">
-          <span className="font-bold text-emerald-800">📌 [학습 가이드]: </span>
-          공책을 세로로 접어 6칸을 만든 뒤 1칸(영어) → 2칸(한글 뜻) → 1칸을 가리고 3칸(영어) → 4칸(한글 뜻) → 5칸(영어) → 6칸(채점/재도전) 순서로 진행해 보세요.
-        </div>
-
-        {/* 6-Column Table (총 6열 등간격 너비 w-1/6, 총 7행) - [요청 반영: 칸 높이 80%로 축소] */}
-        <div className="border-2 border-slate-700 rounded-lg overflow-hidden">
+        {/* 6-Column Table (총 6열 등간격 너비 w-1/6, 총 7행) - [요청 반영: 칸 높이 90%로 조정 및 학습 가이드 박스 삭제] */}
+        <div className="border-2 border-slate-700 rounded-lg overflow-hidden mt-2">
           <table className="w-full text-left border-collapse table-fixed text-xs">
             <thead>
-              <tr className="bg-slate-800 text-white text-center font-bold text-[10.5px] divide-x divide-slate-600">
-                <th className="py-1 px-1 w-1/6 bg-emerald-800/90">
+              <tr className="bg-slate-800 text-white text-center font-bold text-[11px] divide-x divide-slate-600">
+                <th className="py-1.5 px-1 w-1/6 bg-emerald-800/90">
                   1칸 : 영어 (Word)
                 </th>
-                <th className="py-1 px-1 w-1/6">
+                <th className="py-1.5 px-1 w-1/6">
                   2칸 : 뜻 쓰기
                 </th>
-                <th className="py-1 px-1 w-1/6">
+                <th className="py-1.5 px-1 w-1/6">
                   3칸 : 영어 쓰기
                 </th>
-                <th className="py-1 px-1 w-1/6">
+                <th className="py-1.5 px-1 w-1/6">
                   4칸 : 뜻 쓰기
                 </th>
-                <th className="py-1 px-1 w-1/6">
+                <th className="py-1.5 px-1 w-1/6">
                   5칸 : 영어 쓰기
                 </th>
-                <th className="py-1 px-1 w-1/6">
+                <th className="py-1.5 px-1 w-1/6">
                   6칸 : 채점/재도전
                 </th>
               </tr>
@@ -448,14 +442,14 @@ export default function A4Sheet({ sheet, showAnswers = false }) {
                 <tr key={idx} className="divide-x divide-slate-300 hover:bg-slate-50">
                   
                   {/* Column 1: English Word */}
-                  <td className="py-1 px-2 bg-slate-50 font-bold text-slate-900 text-center">
+                  <td className="py-1.5 px-2 bg-slate-50 font-bold text-slate-900 text-center">
                     <span className="text-xs font-black tracking-wide text-slate-800">
                       {item.word}
                     </span>
                   </td>
 
                   {/* Column 2: Meaning */}
-                  <td className="py-1 px-2 relative text-center">
+                  <td className="py-1.5 px-2 relative text-center">
                     {showAnswers ? (
                       <span className="text-[11px] font-bold text-emerald-700 animate-fadeIn">
                         {item.meaning}
@@ -466,7 +460,7 @@ export default function A4Sheet({ sheet, showAnswers = false }) {
                   </td>
 
                   {/* Column 3: English */}
-                  <td className="py-1 px-2 relative text-center">
+                  <td className="py-1.5 px-2 relative text-center">
                     {showAnswers ? (
                       <span className="text-[11px] font-bold text-indigo-700 animate-fadeIn">
                         {item.word}
@@ -477,7 +471,7 @@ export default function A4Sheet({ sheet, showAnswers = false }) {
                   </td>
 
                   {/* Column 4: Meaning 2nd try */}
-                  <td className="py-1 px-2 relative text-center">
+                  <td className="py-1.5 px-2 relative text-center">
                     {showAnswers ? (
                       <span className="text-[11px] font-bold text-emerald-700 animate-fadeIn">
                         {item.meaning}
@@ -488,7 +482,7 @@ export default function A4Sheet({ sheet, showAnswers = false }) {
                   </td>
 
                   {/* Column 5: English 2nd try */}
-                  <td className="py-1 px-2 relative text-center">
+                  <td className="py-1.5 px-2 relative text-center">
                     {showAnswers ? (
                       <span className="text-[11px] font-bold text-indigo-700 animate-fadeIn">
                         {item.word}
@@ -499,7 +493,7 @@ export default function A4Sheet({ sheet, showAnswers = false }) {
                   </td>
 
                   {/* Column 6: Grade / Check & Retry */}
-                  <td className="py-1 px-2 text-center text-slate-400">
+                  <td className="py-1.5 px-2 text-center text-slate-400">
                     <div className="flex items-center justify-center gap-1.5">
                       <span className="inline-block w-3.5 h-3.5 border border-slate-400 rounded-sm text-[9px] leading-3 text-center">
                         ✓
