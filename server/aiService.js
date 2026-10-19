@@ -57,29 +57,28 @@ export async function generateDailyWorksheet({
 아이들이 영어를 무서워하지 않고 재미있게 웃으면서 매일 10분씩 스스로 공부할 수 있도록 유머러스하고 효과적인 A4 1장 맞춤 학습지를 제작합니다.
 
 [학습지 3단락 핵심 구성 규칙]:
-1단락: 단어를 소리와 의미를 접목하여 쉽게 외우는 "2~3어절 초간결 연상 암기법" 영단어 5개
+1단락: 단어를 소리와 의미를 접목하여 쉽게 외우는 "2~4어절 말장난 연상 암기법" 영단어 5개
   - 초등 3~6학년 수준에 꼭 맞춘 영단어 5개 선정.
-  - [★ 최우선 필수 철칙 1: "연상 문장은 무조건 '2~3어절'의 초간결 슬로건으로 구성할 것!"]
-    * 긴 설명조 문장 절대 금지! 아이들이 1초 만에 직관적으로 외울 수 있도록 반드시 2~3어절로만 작성하세요.
-  - [★ 최우선 필수 철칙 2: "관련이 있어야 안 까먹는다!"]
-    * 소리 힌트가 단어의 실제 뜻/상황과 필연적으로 맞아떨어져야 합니다.
-  - [2~3어절 올바른 표준 예시]:
-    - blunder (큰 실수) -> "실수하면 불난다!" (2어절)
-    - curious (호기심 많은) -> "질문 큐! 호기심대장!" (2~3어절)
-    - explain (설명하다) -> "알기 쉽게 설명!" (3어절)
-    - protect (보호하다) -> "프로처럼 딱 보호!" (3어절)
-    - courage (용기) -> "가슴에서 커진 용기!" (3어절)
-    - rule (규칙) -> "꼭 지키는 규칙!" (3어절)
-    - win (이기다) -> "원하던 승리! 이겼다!" (3어절)
-    - share (나누다) -> "사이좋게 쉐어 나누기!" (3어절)
-    - explore (탐험하다) -> "신비한 세계 탐험!" (3어절)
-    - whisper (속삭이다) -> "바람처럼 휘~ 속삭이다!" (3어절)
-    - patient (참을성 있는) -> "페이스 지키는 참을성!" (3어절)
-    - diligent (부지런한) -> "딜레이 없는 부지런함!" (3어절)
-    - treasure (보물) -> "해적선의 황금 보물!" (3어절)
-    - generous (너그러운) -> "친구를 너그럽게 안아줘요!" (3어절)
-  - 각 단어마다 3개의 2~3어절 연상 후보("mnemonic_candidates")를 작성하고, 그중 가장 좋은 1개를 "mnemonic"으로 선정하세요.
-  - 단어, 한글 발음 표기, 품사, 최종 선정된 2~3어절 연상 문장, 3개 연상 후보 배열, 우리말 뜻, 초등학생 눈높이의 친근한 실생활 예문과 해석 포함.
+  - [★ 최우선 필수 철칙: "영어 발음과 비슷한 한국어 소리 연상 + 실제 뜻이 2~4어절 안에 적당히 쏙 들어가야 한다!"]
+    * 긴 설명조 문장 절대 금지! 
+    * 영어 발음과 비슷한 소리(예: blunder -> 불난다, curious -> 질문 큐, explain -> 익스플레인)가 실제 뜻(큰 실수, 호기심, 설명)과 2~4어절로 자연스럽게 어우러지게 만드세요.
+  - [2~4어절 모범 표준 예시]:
+    - blunder (큰 실수) -> "실수하면 불난다! 블런더!" (3어절)
+    - curious (호기심 많은) -> "질문 큐! 호기심 큐리어스!" (3어절)
+    - explain (설명하다) -> "알기 쉽게 익스플레인 설명해!" (3어절)
+    - protect (보호하다) -> "프로처럼 딱! 프로텍트 보호!" (3어절)
+    - courage (용기) -> "씩씩하게 커리지(커지는) 용기!" (3어절)
+    - rule (규칙) -> "게임의 룰! 지키는 규칙!" (3어절)
+    - win (이기다) -> "원(win)하던 승리! 윈(이기다)!" (3어절)
+    - share (나누다) -> "친구랑 쉐어! 사이좋게 나누기!" (3어절)
+    - explore (탐험하다) -> "익스플로러 타고 미지의 탐험!" (3~4어절)
+    - whisper (속삭이다) -> "바람처럼 휘스퍼~ 살짝 속삭이다!" (3~4어절)
+    - patient (참을성 있는) -> "페이스 지키며 페이션트(참을성)!" (3어절)
+    - diligent (부지런한) -> "딜레이 없이 딜리전트 부지런함!" (3~4어절)
+    - treasure (보물) -> "반짝이는 트레저! 황금 보물!" (3어절)
+    - generous (너그러운) -> "너그럽게 안아주는 제너러스!" (3어절)
+  - 각 단어마다 3개의 2~4어절 연상 후보("mnemonic_candidates")를 작성하고, 그중 가장 좋은 1개를 "mnemonic"으로 선정하세요.
+  - 단어, 한글 발음 표기, 품사, 최종 선정된 2~4어절 연상 문장, 3개 연상 후보 배열, 우리말 뜻, 초등학생 눈높이의 친근한 실생활 예문과 해석 포함.
 
 2단락: 실생활 영어를 통째로 외우는 "통문장 생활영어" 2개
   - 아이들이 학교, 가정, 친구 사이에서 바로 쓸 수 있는 실용적인 2개 표현.
@@ -211,11 +210,11 @@ function getFallbackWorksheet(dayNumber, theme, gradeLevel, pastWords) {
           word: 'blunder',
           pronunciation: '[블런더 / ˈblʌndər]',
           part_of_speech: '명사',
-          mnemonic: '실수하면 불난다!',
+          mnemonic: '실수하면 불난다! 블런더!',
           mnemonic_candidates: [
-            '실수하면 불난다!',
-            '어이쿠 불난다! 큰실수!',
-            '실수 조심! 불난다!'
+            '실수하면 불난다! 블런더!',
+            '큰 실수하면 불난다(블런더)!',
+            '어이쿠 실수! 불난다 블런더!'
           ],
           meaning: '큰 실수, 실수하다',
           example_en: 'Everyone makes a blunder sometimes.',
@@ -225,11 +224,11 @@ function getFallbackWorksheet(dayNumber, theme, gradeLevel, pastWords) {
           word: 'curious',
           pronunciation: '[큐리어스 / ˈkjʊəriəs]',
           part_of_speech: '형용사',
-          mnemonic: '질문 큐! 호기심대장!',
+          mnemonic: '질문 큐! 호기심 큐리어스!',
           mnemonic_candidates: [
-            '질문 큐! 호기심대장!',
-            '궁금증 폭발! 큐!',
-            '호기심 대장! 큐!'
+            '질문 큐! 호기심 큐리어스!',
+            '질문 큐! 큐리어스 호기심대장!',
+            '궁금한 건 큐! 큐리어스!'
           ],
           meaning: '호기심 많은, 궁금한',
           example_en: 'I am curious about space.',
@@ -239,11 +238,11 @@ function getFallbackWorksheet(dayNumber, theme, gradeLevel, pastWords) {
           word: 'explain',
           pronunciation: '[익스플레인 / ɪkˈspleɪn]',
           part_of_speech: '동사',
-          mnemonic: '알기 쉽게 설명!',
+          mnemonic: '알기 쉽게 익스플레인 설명해!',
           mnemonic_candidates: [
-            '알기 쉽게 설명!',
-            '이해 쏙쏙 설명!',
-            '차근차근 쉬운 설명!'
+            '알기 쉽게 익스플레인 설명해!',
+            '이해 쏙쏙 익스플레인 설명!',
+            '그림 그리며 익스플레인 설명해요!'
           ],
           meaning: '설명하다',
           example_en: 'Can you explain this math question?',
@@ -253,11 +252,11 @@ function getFallbackWorksheet(dayNumber, theme, gradeLevel, pastWords) {
           word: 'protect',
           pronunciation: '[프로텍트 / prəˈtekt]',
           part_of_speech: '동사',
-          mnemonic: '프로처럼 딱 보호!',
+          mnemonic: '프로처럼 딱! 프로텍트 보호!',
           mnemonic_candidates: [
-            '프로처럼 딱 보호!',
-            '방패로 딱 보호!',
-            '안전하게 지키고 보호!'
+            '프로처럼 딱! 프로텍트 보호!',
+            '프로처럼 딱 막아 프로텍트!',
+            '방패로 딱! 프로텍트 보호!'
           ],
           meaning: '보호하다, 지키다',
           example_en: 'We must protect our clean school.',
@@ -267,11 +266,11 @@ function getFallbackWorksheet(dayNumber, theme, gradeLevel, pastWords) {
           word: 'courage',
           pronunciation: '[커리지 / ˈkʌrɪdʒ]',
           part_of_speech: '명사',
-          mnemonic: '가슴에서 커진 용기!',
+          mnemonic: '씩씩하게 커리지(커지는) 용기!',
           mnemonic_candidates: [
-            '가슴에서 커진 용기!',
-            '씩씩하게 커진 용기!',
-            '두려움 없는 용기!'
+            '씩씩하게 커리지(커지는) 용기!',
+            '가슴속 쑤욱 커리지 용기!',
+            '두려움 이기는 커리지 용기!'
           ],
           meaning: '용기, 담력',
           example_en: 'Take courage and try your best.',
@@ -317,11 +316,11 @@ function getFallbackWorksheet(dayNumber, theme, gradeLevel, pastWords) {
           word: 'rule',
           pronunciation: '[룰 / ruːl]',
           part_of_speech: '명사',
-          mnemonic: '꼭 지키는 규칙!',
+          mnemonic: '게임의 룰! 지키는 규칙!',
           mnemonic_candidates: [
-            '꼭 지키는 규칙!',
-            '게임할 때 룰!',
-            '모두 지키는 규칙!'
+            '게임의 룰! 지키는 규칙!',
+            '룰루랄라 지키는 룰(규칙)!',
+            '모두 함께 지키는 룰!'
           ],
           meaning: '규칙',
           example_en: "Let's learn the rules of this game.",
@@ -331,11 +330,11 @@ function getFallbackWorksheet(dayNumber, theme, gradeLevel, pastWords) {
           word: 'win',
           pronunciation: '[윈 / wɪn]',
           part_of_speech: '동사',
-          mnemonic: '원하던 승리! 이겼다!',
+          mnemonic: '원(win)하던 승리! 윈(이기다)!',
           mnemonic_candidates: [
-            '원하던 승리! 이겼다!',
-            '신나게 경기 이기다!',
-            '함께 승리 윈윈!'
+            '원(win)하던 승리! 윈(이기다)!',
+            '시합에서 윈! 멋지게 이겼다!',
+            '정정당당하게 윈! 이겼다!'
           ],
           meaning: '이기다',
           example_en: 'I want to win the game!',
@@ -345,11 +344,11 @@ function getFallbackWorksheet(dayNumber, theme, gradeLevel, pastWords) {
           word: 'share',
           pronunciation: '[쉐어 / ʃeər]',
           part_of_speech: '동사',
-          mnemonic: '사이좋게 쉐어 나누기!',
+          mnemonic: '친구랑 쉐어! 사이좋게 나누기!',
           mnemonic_candidates: [
-            '사이좋게 쉐어 나누기!',
-            '친구와 함께 나누다!',
-            '반씩 쪼개어 나누기!'
+            '친구랑 쉐어! 사이좋게 나누기!',
+            '간식을 쉐어! 함께 나누다!',
+            '사이좋게 쉐어 반씩 나누기!'
           ],
           meaning: '공유하다, 나누다',
           example_en: 'Can you share your toys with me?',
@@ -359,11 +358,11 @@ function getFallbackWorksheet(dayNumber, theme, gradeLevel, pastWords) {
           word: 'explore',
           pronunciation: '[익스플로어 / ɪkˈsplɔːr]',
           part_of_speech: '동사',
-          mnemonic: '신비한 세계 탐험!',
+          mnemonic: '익스플로러 타고 미지의 탐험!',
           mnemonic_candidates: [
-            '신비한 세계 탐험!',
-            '새로운 세상 탐험!',
-            '비밀의 숲 탐험!'
+            '익스플로러 타고 미지의 탐험!',
+            '신비한 세계 익스플로어 탐험!',
+            '새로운 세상 익스플로어 탐험!'
           ],
           meaning: '탐험하다',
           example_en: "Let's explore the mystery cave together.",
@@ -373,11 +372,11 @@ function getFallbackWorksheet(dayNumber, theme, gradeLevel, pastWords) {
           word: 'whisper',
           pronunciation: '[휘스퍼 / ˈwɪspər]',
           part_of_speech: '동사',
-          mnemonic: '바람처럼 휘~ 속삭이다!',
+          mnemonic: '바람처럼 휘스퍼~ 살짝 속삭이다!',
           mnemonic_candidates: [
-            '바람처럼 휘~ 속삭이다!',
-            '귓가에 살짝 속삭이다!',
-            '도서관에선 조용히 속삭여요!'
+            '바람처럼 휘스퍼~ 살짝 속삭이다!',
+            '귓가에 휘스퍼~ 조용히 속삭이다!',
+            '도서관에선 휘스퍼~ 조용히 속삭여요!'
           ],
           meaning: '속삭이다, 귓속말하다',
           example_en: 'Please whisper quietly in the library.',

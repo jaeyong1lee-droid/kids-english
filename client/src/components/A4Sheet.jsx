@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
 
-// 초등 필수 어휘 연상 사전 (엄격한 2~3어절 초간결 슬로건)
+// 초등 필수 어휘 연상 사전 (영어 발음 연상 + 실제 뜻이 융합된 2~4어절 비법)
 const BUILTIN_MNEMONIC_DICT = {
   rule: {
     word: 'rule',
     pronunciation: '[룰 / ruːl]',
     part_of_speech: '명사',
-    mnemonic: '꼭 지키는 규칙!',
+    mnemonic: '게임의 룰! 지키는 규칙!',
     mnemonic_candidates: [
-      '꼭 지키는 규칙!',
-      '게임할 때 룰!',
-      '모두 지키는 규칙!'
+      '게임의 룰! 지키는 규칙!',
+      '룰루랄라 지키는 룰(규칙)!',
+      '모두 함께 지키는 룰!'
     ],
     meaning: '규칙',
     example_en: "Let's learn the rules of this game.",
@@ -20,11 +20,11 @@ const BUILTIN_MNEMONIC_DICT = {
     word: 'win',
     pronunciation: '[윈 / wɪn]',
     part_of_speech: '동사',
-    mnemonic: '원하던 승리! 이겼다!',
+    mnemonic: '원(win)하던 승리! 윈(이기다)!',
     mnemonic_candidates: [
-      '원하던 승리! 이겼다!',
-      '신나게 경기 이기다!',
-      '함께 승리 윈윈!'
+      '원(win)하던 승리! 윈(이기다)!',
+      '시합에서 윈! 멋지게 이겼다!',
+      '정정당당하게 윈! 이겼다!'
     ],
     meaning: '이기다',
     example_en: 'I want to win the game!',
@@ -34,11 +34,11 @@ const BUILTIN_MNEMONIC_DICT = {
     word: 'share',
     pronunciation: '[쉐어 / ʃeər]',
     part_of_speech: '동사',
-    mnemonic: '사이좋게 쉐어 나누기!',
+    mnemonic: '친구랑 쉐어! 사이좋게 나누기!',
     mnemonic_candidates: [
-      '사이좋게 쉐어 나누기!',
-      '친구와 함께 나누다!',
-      '반씩 쪼개어 나누기!'
+      '친구랑 쉐어! 사이좋게 나누기!',
+      '간식을 쉐어! 함께 나누다!',
+      '사이좋게 쉐어 반씩 나누기!'
     ],
     meaning: '공유하다, 나누다',
     example_en: 'Can you share your toys with me?',
@@ -48,11 +48,11 @@ const BUILTIN_MNEMONIC_DICT = {
     word: 'explore',
     pronunciation: '[익스플로어 / ɪkˈsplɔːr]',
     part_of_speech: '동사',
-    mnemonic: '신비한 세계 탐험!',
+    mnemonic: '익스플로러 타고 미지의 탐험!',
     mnemonic_candidates: [
-      '신비한 세계 탐험!',
-      '새로운 세상 탐험!',
-      '비밀의 숲 탐험!'
+      '익스플로러 타고 미지의 탐험!',
+      '신비한 세계 익스플로어 탐험!',
+      '새로운 세상 익스플로어 탐험!'
     ],
     meaning: '탐험하다',
     example_en: "Let's explore the mystery cave.",
@@ -62,11 +62,11 @@ const BUILTIN_MNEMONIC_DICT = {
     word: 'whisper',
     pronunciation: '[휘스퍼 / ˈwɪspər]',
     part_of_speech: '동사',
-    mnemonic: '바람처럼 휘~ 속삭이다!',
+    mnemonic: '바람처럼 휘스퍼~ 살짝 속삭이다!',
     mnemonic_candidates: [
-      '바람처럼 휘~ 속삭이다!',
-      '귓가에 살짝 속삭이다!',
-      '도서관에선 조용히 속삭여요!'
+      '바람처럼 휘스퍼~ 살짝 속삭이다!',
+      '귓가에 휘스퍼~ 조용히 속삭이다!',
+      '도서관에선 휘스퍼~ 조용히 속삭여요!'
     ],
     meaning: '속삭이다, 귓속말하다',
     example_en: 'Please whisper in the library.',
@@ -76,11 +76,11 @@ const BUILTIN_MNEMONIC_DICT = {
     word: 'blunder',
     pronunciation: '[블런더 / ˈblʌndər]',
     part_of_speech: '명사',
-    mnemonic: '실수하면 불난다!',
+    mnemonic: '실수하면 불난다! 블런더!',
     mnemonic_candidates: [
-      '실수하면 불난다!',
-      '어이쿠 불난다! 큰실수!',
-      '실수 조심! 불난다!'
+      '실수하면 불난다! 블런더!',
+      '큰 실수하면 불난다(블런더)!',
+      '어이쿠 실수! 불난다 블런더!'
     ],
     meaning: '큰 실수, 실수하다',
     example_en: "Don't worry, it was just a small blunder.",
@@ -90,11 +90,11 @@ const BUILTIN_MNEMONIC_DICT = {
     word: 'curious',
     pronunciation: '[큐리어스 / ˈkjʊəriəs]',
     part_of_speech: '형용사',
-    mnemonic: '질문 큐! 호기심대장!',
+    mnemonic: '질문 큐! 호기심 큐리어스!',
     mnemonic_candidates: [
-      '질문 큐! 호기심대장!',
-      '궁금증 폭발! 큐!',
-      '호기심 대장! 큐!'
+      '질문 큐! 호기심 큐리어스!',
+      '질문 큐! 큐리어스 호기심대장!',
+      '궁금한 건 큐! 큐리어스!'
     ],
     meaning: '호기심 많은, 궁금한',
     example_en: 'I am curious about space.',
@@ -104,11 +104,11 @@ const BUILTIN_MNEMONIC_DICT = {
     word: 'explain',
     pronunciation: '[익스플레인 / ɪkˈspleɪn]',
     part_of_speech: '동사',
-    mnemonic: '알기 쉽게 설명!',
+    mnemonic: '알기 쉽게 익스플레인 설명해!',
     mnemonic_candidates: [
-      '알기 쉽게 설명!',
-      '이해 쏙쏙 설명!',
-      '차근차근 쉬운 설명!'
+      '알기 쉽게 익스플레인 설명해!',
+      '이해 쏙쏙 익스플레인 설명!',
+      '그림 그리며 익스플레인 설명해요!'
     ],
     meaning: '설명하다',
     example_en: 'Can you explain this math question?',
@@ -118,11 +118,11 @@ const BUILTIN_MNEMONIC_DICT = {
     word: 'protect',
     pronunciation: '[프로텍트 / prəˈtekt]',
     part_of_speech: '동사',
-    mnemonic: '프로처럼 딱 보호!',
+    mnemonic: '프로처럼 딱! 프로텍트 보호!',
     mnemonic_candidates: [
-      '프로처럼 딱 보호!',
-      '방패로 딱 보호!',
-      '안전하게 지키고 보호!'
+      '프로처럼 딱! 프로텍트 보호!',
+      '프로처럼 딱 막아 프로텍트!',
+      '방패로 딱! 프로텍트 보호!'
     ],
     meaning: '보호하다, 지키다',
     example_en: 'We must protect our clean playground.',
@@ -132,11 +132,11 @@ const BUILTIN_MNEMONIC_DICT = {
     word: 'courage',
     pronunciation: '[커리지 / ˈkʌrɪdʒ]',
     part_of_speech: '명사',
-    mnemonic: '가슴에서 커진 용기!',
+    mnemonic: '씩씩하게 커리지(커지는) 용기!',
     mnemonic_candidates: [
-      '가슴에서 커진 용기!',
-      '씩씩하게 커진 용기!',
-      '두려움 없는 용기!'
+      '씩씩하게 커리지(커지는) 용기!',
+      '가슴속 쑤욱 커리지 용기!',
+      '두려움 이기는 커리지 용기!'
     ],
     meaning: '용기, 담력',
     example_en: 'Take courage and try your best.',
@@ -146,11 +146,11 @@ const BUILTIN_MNEMONIC_DICT = {
     word: 'treasure',
     pronunciation: '[트레저 / ˈtreʒər]',
     part_of_speech: '명사',
-    mnemonic: '해적선의 황금 보물!',
+    mnemonic: '반짝이는 트레저! 황금 보물!',
     mnemonic_candidates: [
-      '해적선의 황금 보물!',
-      '반짝반짝 소중한 보물!',
-      '세상에서 가장 귀한보물!'
+      '반짝이는 트레저! 황금 보물!',
+      '비밀 상자 속 트레저(보물)!',
+      '해적선의 트레저 황금 보물!'
     ],
     meaning: '보물, 소중한 것',
     example_en: 'Good friends are my real treasure.',
@@ -160,11 +160,11 @@ const BUILTIN_MNEMONIC_DICT = {
     word: 'patient',
     pronunciation: '[페이션트 / ˈpeɪʃnt]',
     part_of_speech: '형용사',
-    mnemonic: '페이스 지키는 참을성!',
+    mnemonic: '페이스 지키며 페이션트(참을성)!',
     mnemonic_candidates: [
-      '페이스 지키는 참을성!',
-      '차례 기다리는 인내심!',
-      '차분하게 기다리는 참을성!'
+      '페이스 지키며 페이션트(참을성)!',
+      '차분하게 페이션트! 기다리는 참을성!',
+      '새치기 패스! 페이션트 인내심!'
     ],
     meaning: '참을성 있는, 인내심 있는',
     example_en: 'Please be patient and wait your turn.',
@@ -174,11 +174,11 @@ const BUILTIN_MNEMONIC_DICT = {
     word: 'diligent',
     pronunciation: '[딜리전트 / ˈdɪlɪdʒənt]',
     part_of_speech: '형용사',
-    mnemonic: '딜레이 없는 부지런함!',
+    mnemonic: '딜레이 없이 딜리전트 부지런함!',
     mnemonic_candidates: [
-      '딜레이 없는 부지런함!',
-      '매일 일찍 부지런함!',
-      '성실하게 일하는 부지런함!'
+      '딜레이 없이 딜리전트 부지런함!',
+      '딜레이 없는 부지런한 딜리전트!',
+      '매일 일찍 딜리전트 부지런함!'
     ],
     meaning: '부지런한, 성실한',
     example_en: 'He is a diligent and smart student.',
@@ -188,11 +188,11 @@ const BUILTIN_MNEMONIC_DICT = {
     word: 'generous',
     pronunciation: '[제너러스 / ˈdʒenərəs]',
     part_of_speech: '형용사',
-    mnemonic: '친구를 너그럽게 안아줘요!',
+    mnemonic: '너그럽게 안아주는 제너러스!',
     mnemonic_candidates: [
-      '친구를 너그럽게 안아줘요!',
-      '실수해도 너그럽게 용서!',
-      '마음 넓고 너그러움!'
+      '너그럽게 안아주는 제너러스!',
+      '제 마음 넓은 제너러스(너그러운)!',
+      '친구에게 베푸는 제너러스(너그러운)!'
     ],
     meaning: '너그러운, 관대한',
     example_en: 'She is always generous to everyone.',

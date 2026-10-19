@@ -87,20 +87,20 @@ export async function initDb() {
     if (count === 0) {
       console.log('[DB] Seeding starter elementary vocabulary pool...');
       const starterWords = [
-        { word: 'blunder', meaning: '큰 실수', mnemonic: '실수하면 불난다!' },
-        { word: 'curious', meaning: '호기심 많은, 궁금한', mnemonic: '질문 큐! 호기심대장!' },
-        { word: 'explain', meaning: '설명하다', mnemonic: '알기 쉽게 설명!' },
-        { word: 'protect', meaning: '보호하다, 지키다', mnemonic: '프로처럼 딱 보호!' },
-        { word: 'courage', meaning: '용기, 담력', mnemonic: '가슴에서 커진 용기!' },
-        { word: 'whisper', meaning: '속삭이다', mnemonic: '바람처럼 휘~ 속삭이다!' },
-        { word: 'patient', meaning: '참을성 있는, 인내심 강한', mnemonic: '페이스 지키는 참을성!' },
-        { word: 'diligent', meaning: '부지런한, 성실한', mnemonic: '딜레이 없는 부지런함!' },
-        { word: 'treasure', meaning: '보물, 소중한 것', mnemonic: '해적선의 황금 보물!' },
-        { word: 'generous', meaning: '너그러운, 관대한', mnemonic: '친구를 너그럽게 안아줘요!' },
-        { word: 'rule', meaning: '규칙', mnemonic: '꼭 지키는 규칙!' },
-        { word: 'win', meaning: '이기다', mnemonic: '원하던 승리! 이겼다!' },
-        { word: 'share', meaning: '나누다, 함께 쓰다', mnemonic: '사이좋게 쉐어 나누기!' },
-        { word: 'explore', meaning: '탐험하다', mnemonic: '신비한 세계 탐험!' }
+        { word: 'blunder', meaning: '큰 실수', mnemonic: '실수하면 불난다! 블런더!' },
+        { word: 'curious', meaning: '호기심 많은, 궁금한', mnemonic: '질문 큐! 호기심 큐리어스!' },
+        { word: 'explain', meaning: '설명하다', mnemonic: '알기 쉽게 익스플레인 설명해!' },
+        { word: 'protect', meaning: '보호하다, 지키다', mnemonic: '프로처럼 딱! 프로텍트 보호!' },
+        { word: 'courage', meaning: '용기, 담력', mnemonic: '씩씩하게 커리지(커지는) 용기!' },
+        { word: 'whisper', meaning: '속삭이다', mnemonic: '바람처럼 휘스퍼~ 살짝 속삭이다!' },
+        { word: 'patient', meaning: '참을성 있는, 인내심 강한', mnemonic: '페이스 지키며 페이션트(참을성)!' },
+        { word: 'diligent', meaning: '부지런한, 성실한', mnemonic: '딜레이 없이 딜리전트 부지런함!' },
+        { word: 'treasure', meaning: '보물, 소중한 것', mnemonic: '반짝이는 트레저! 황금 보물!' },
+        { word: 'generous', meaning: '너그러운, 관대한', mnemonic: '너그럽게 안아주는 제너러스!' },
+        { word: 'rule', meaning: '규칙', mnemonic: '게임의 룰! 지키는 규칙!' },
+        { word: 'win', meaning: '이기다', mnemonic: '원(win)하던 승리! 윈(이기다)!' },
+        { word: 'share', meaning: '나누다, 함께 쓰다', mnemonic: '친구랑 쉐어! 사이좋게 나누기!' },
+        { word: 'explore', meaning: '탐험하다', mnemonic: '익스플로러 타고 미지의 탐험!' }
       ];
 
       for (const w of starterWords) {
