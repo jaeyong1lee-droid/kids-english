@@ -87,16 +87,20 @@ export async function initDb() {
     if (count === 0) {
       console.log('[DB] Seeding starter elementary vocabulary pool...');
       const starterWords = [
-        { word: 'blunder', meaning: '큰 실수', mnemonic: '실수하면 불난다!' },
-        { word: 'curious', meaning: '호기심 많은, 궁금한', mnemonic: '큐리(호기심)가 많은 아이' },
-        { word: 'courage', meaning: '용기', mnemonic: '커리지(용기) 내어 앞으로 가자' },
-        { word: 'whisper', meaning: '속삭이다', mnemonic: '귓가에 휘스퍼~ 살짝 속삭이다' },
-        { word: 'protect', meaning: '보호하다, 지키다', mnemonic: '프로(전문가)처럼 텍(딱) 막아 보호하다' },
-        { word: 'diligent', meaning: '부지런한, 성실한', mnemonic: '딜리전트하게 매일 일찍 일어나는 친구' },
-        { word: 'treasure', meaning: '보물', mnemonic: '섬에 숨겨진 트레저(보물)를 찾아라' },
-        { word: 'generous', meaning: '너그러운, 관대한', mnemonic: '친구들에게 잘 나눠주는 제너러스한 마음' },
-        { word: 'explore', meaning: '탐험하다', mnemonic: '익스플로러 타고 미지의 세계를 탐험하다' },
-        { word: 'patient', meaning: '참을성 있는, 인내심 강한', mnemonic: '페이션트하게 차분히 기다려요' }
+        { word: 'curious', meaning: '호기심 많은, 궁금한', mnemonic: '질문 큐(Q)! 궁금한 게 너무 많은 호기심(curious) 대장!' },
+        { word: 'blunder', meaning: '어처구니없는 큰 실수', mnemonic: '눈먼 듯이(blind) 앞을 못 보고 넘어져 버린 어처구니없는 큰 실수(blunder)!' },
+        { word: 'explain', meaning: '설명하다', mnemonic: '복잡하게 얽힌 것을 알기 쉽게 플레인(plain: 평평하게) 쫙 펴서 설명하다(explain)!' },
+        { word: 'protect', meaning: '보호하다, 지키다', mnemonic: '경호 프로(전문가)처럼 딱(tect) 막아서 소중한 사람을 보호하다(protect)!' },
+        { word: 'courage', meaning: '용기, 담력', mnemonic: '두려움을 떨쳐내고 가슴속에서 쑤욱 커(cour)지는 씩씩한 용기(courage)!' },
+        { word: 'whisper', meaning: '속삭이다', mnemonic: '귓가에 바람처럼 휘~ 스르륵 소리 낮춰 조용히 속삭이다(whisper)!' },
+        { word: 'patient', meaning: '참을성 있는, 인내심 강한', mnemonic: '조급해하지 않고 마음의 페이스(pace)를 차분히 지키는 참을성(patient)!' },
+        { word: 'diligent', meaning: '부지런한, 성실한', mnemonic: '미루기(딜레이) 절대 없이 오늘 할 일을 척척 끝내는 부지런한(diligent) 사람!' },
+        { word: 'treasure', meaning: '보물, 소중한 것', mnemonic: '비밀 지도 따라 찾아낸 해적선의 황금 트레저(treasure: 보물) 상자!' },
+        { word: 'generous', meaning: '너그러운, 관대한', mnemonic: '친구의 실수도 제(자신의) 일처럼 먼저 안아주는 너그럽고(generous) 관대한 마음!' },
+        { word: 'rule', meaning: '규칙', mnemonic: '자로 잰 듯(ruler) 반듯하게 모두가 공정하게 지켜야 할 약속, 바로 규칙(rule/룰)!' },
+        { word: 'win', meaning: '이기다', mnemonic: '간절히 원(win)하던 우승을 위해 정정당당하게 겨뤄 이기다(win)!' },
+        { word: 'share', meaning: '나누다, 함께 쓰다', mnemonic: '맛있는 케이크를 반으로 쪼개어(share) 친구들과 사이좋게 나누다(share)!' },
+        { word: 'explore', meaning: '탐험하다', mnemonic: '익숙한 길을 벗어나(ex) 미지의 신비한 숲속을 당당히 탐험하다(explore)!' }
       ];
 
       for (const w of starterWords) {

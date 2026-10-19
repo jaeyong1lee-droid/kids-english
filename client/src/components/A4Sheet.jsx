@@ -6,10 +6,10 @@ const BUILTIN_MNEMONIC_DICT = {
     word: 'rule',
     pronunciation: '[룰 / ruːl]',
     part_of_speech: '명사',
-    mnemonic: '게임할 때 모두가 공정하게 지켜야 할 약속! 바로 공정한 규칙(rule/룰)!',
+    mnemonic: '자로 잰 듯(ruler) 반듯하게 모두가 공정하게 지켜야 할 약속, 바로 규칙(rule/룰)!',
     mnemonic_candidates: [
+      '자로 잰 듯(ruler) 반듯하게 모두가 공정하게 지켜야 할 약속, 바로 규칙(rule/룰)!',
       '게임할 때 모두가 공정하게 지켜야 할 약속! 바로 공정한 규칙(rule/룰)!',
-      '신호등 지키기처럼 우리 모두가 약속한 안전 규칙(rule)을 지켜요!',
       '룰(rule)을 잘 지켜야 친구들과 다투지 않고 신나게 놀 수 있어!'
     ],
     meaning: '규칙',
@@ -20,11 +20,11 @@ const BUILTIN_MNEMONIC_DICT = {
     word: 'win',
     pronunciation: '[윈 / wɪn]',
     part_of_speech: '동사',
-    mnemonic: '친구랑 정정당당하게 겨뤄서 승리하고 서로 기쁜 윈-윈(win-win)!',
+    mnemonic: '간절히 원(win)하던 우승을 위해 정정당당하게 겨뤄 마침내 이기다(win)!',
     mnemonic_candidates: [
+      '간절히 원(win)하던 우승을 위해 정정당당하게 겨뤄 마침내 이기다(win)!',
       '친구랑 정정당당하게 겨뤄서 승리하고 서로 기쁜 윈-윈(win-win)!',
-      '포기하지 않고 끝까지 최선을 다해 결승전에서 멋지게 이기다(win)!',
-      '열심히 땀 흘려 훈련한 덕분에 시합에서 당당하게 승리(win)했어!'
+      '포기하지 않고 끝까지 최선을 다해 결승전에서 멋지게 이기다(win)!'
     ],
     meaning: '이기다',
     example_en: 'I want to win the game!',
@@ -34,11 +34,11 @@ const BUILTIN_MNEMONIC_DICT = {
     word: 'share',
     pronunciation: '[쉐어 / ʃeər]',
     part_of_speech: '동사',
-    mnemonic: '맛있는 간식을 나 혼자만 먹지 않고 친구들과 사이좋게 쉐어(share: 나누다)!',
+    mnemonic: '맛있는 케이크를 반으로 쪼개어(share) 친구들과 사이좋게 나누다(share)!',
     mnemonic_candidates: [
+      '맛있는 케이크를 반으로 쪼개어(share) 친구들과 사이좋게 나누다(share)!',
       '맛있는 간식을 나 혼자만 먹지 않고 친구들과 사이좋게 쉐어(share: 나누다)!',
-      '내가 아끼는 색연필을 짝꿍과 함께 나누어(share) 쓰는 따뜻한 마음!',
-      '기쁨도 슬픔도 친구와 함께 나누면(share) 두 배가 돼요!'
+      '내가 아끼는 색연필을 짝꿍과 함께 나누어(share) 쓰는 따뜻한 마음!'
     ],
     meaning: '공유하다, 나누다',
     example_en: 'Can you share your toys with me?',
@@ -48,11 +48,11 @@ const BUILTIN_MNEMONIC_DICT = {
     word: 'explore',
     pronunciation: '[익스플로어 / ɪkˈsplɔːr]',
     part_of_speech: '동사',
-    mnemonic: '미지의 보물섬을 향해 나침반 들고 신비한 정글을 탐험(explore)하다!',
+    mnemonic: '익숙한 길을 벗어나(ex) 미지의 신비한 숲속을 당당히 탐험하다(explore)!',
     mnemonic_candidates: [
+      '익숙한 길을 벗어나(ex) 미지의 신비한 숲속을 당당히 탐험하다(explore)!',
       '미지의 보물섬을 향해 나침반 들고 신비한 정글을 탐험(explore)하다!',
-      '우주 탐사선 익스플로러호처럼 새로운 별과 신비한 세계를 탐험(explore)해요!',
-      '비밀 지도를 쫙 펼쳐 들고(익스) 아무도 가보지 않은 비밀 동굴을 탐험하다!'
+      '우주 탐사선 익스플로러호처럼 새로운 별과 신비한 세계를 탐험(explore)해요!'
     ],
     meaning: '탐험하다',
     example_en: "Let's explore the mystery cave.",
@@ -188,9 +188,9 @@ const BUILTIN_MNEMONIC_DICT = {
     word: 'generous',
     pronunciation: '[제너러스 / ˈdʒenərəs]',
     part_of_speech: '형용사',
-    mnemonic: '친구의 실수도 제일 먼저 괜찮다고 안아주는 제너러스(너그러운)한 마음!',
+    mnemonic: '친구의 실수도 제(자신의) 일처럼 먼저 안아주는 너그럽고(generous) 관대한 마음!',
     mnemonic_candidates: [
-      '친구의 실수도 제일 먼저 괜찮다고 안아주는 제너러스(너그러운)한 마음!',
+      '친구의 실수도 제(자신의) 일처럼 먼저 안아주는 너그럽고(generous) 관대한 마음!',
       '친구들에게 장난감도 간식도 아낌없이 넉넉하게 베푸는 너그러운(generous) 성품!',
       '마음의 문을 활짝 열고 누구에게나 친절하게 베푸는 관대하고 너그러운 사람!'
     ],
