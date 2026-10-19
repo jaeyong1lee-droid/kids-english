@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
 
-// 풍부한 초등 필수 어휘 연상 및 발음 사전 (실제 단어 뜻과 100% 매칭된 3개 후보군)
+// 초등 필수 어휘 연상 사전 (엄격한 2~3어절 초간결 슬로건)
 const BUILTIN_MNEMONIC_DICT = {
   rule: {
     word: 'rule',
     pronunciation: '[룰 / ruːl]',
     part_of_speech: '명사',
-    mnemonic: '자로 잰 듯(ruler) 반듯하게 모두가 공정하게 지켜야 할 약속, 바로 규칙(rule/룰)!',
+    mnemonic: '꼭 지키는 규칙!',
     mnemonic_candidates: [
-      '자로 잰 듯(ruler) 반듯하게 모두가 공정하게 지켜야 할 약속, 바로 규칙(rule/룰)!',
-      '게임할 때 모두가 공정하게 지켜야 할 약속! 바로 공정한 규칙(rule/룰)!',
-      '룰(rule)을 잘 지켜야 친구들과 다투지 않고 신나게 놀 수 있어!'
+      '꼭 지키는 규칙!',
+      '게임할 때 룰!',
+      '모두 지키는 규칙!'
     ],
     meaning: '규칙',
     example_en: "Let's learn the rules of this game.",
@@ -20,11 +20,11 @@ const BUILTIN_MNEMONIC_DICT = {
     word: 'win',
     pronunciation: '[윈 / wɪn]',
     part_of_speech: '동사',
-    mnemonic: '간절히 원(win)하던 우승을 위해 정정당당하게 겨뤄 마침내 이기다(win)!',
+    mnemonic: '원하던 승리! 이겼다!',
     mnemonic_candidates: [
-      '간절히 원(win)하던 우승을 위해 정정당당하게 겨뤄 마침내 이기다(win)!',
-      '친구랑 정정당당하게 겨뤄서 승리하고 서로 기쁜 윈-윈(win-win)!',
-      '포기하지 않고 끝까지 최선을 다해 결승전에서 멋지게 이기다(win)!'
+      '원하던 승리! 이겼다!',
+      '신나게 경기 이기다!',
+      '함께 승리 윈윈!'
     ],
     meaning: '이기다',
     example_en: 'I want to win the game!',
@@ -34,11 +34,11 @@ const BUILTIN_MNEMONIC_DICT = {
     word: 'share',
     pronunciation: '[쉐어 / ʃeər]',
     part_of_speech: '동사',
-    mnemonic: '맛있는 케이크를 반으로 쪼개어(share) 친구들과 사이좋게 나누다(share)!',
+    mnemonic: '사이좋게 쉐어 나누기!',
     mnemonic_candidates: [
-      '맛있는 케이크를 반으로 쪼개어(share) 친구들과 사이좋게 나누다(share)!',
-      '맛있는 간식을 나 혼자만 먹지 않고 친구들과 사이좋게 쉐어(share: 나누다)!',
-      '내가 아끼는 색연필을 짝꿍과 함께 나누어(share) 쓰는 따뜻한 마음!'
+      '사이좋게 쉐어 나누기!',
+      '친구와 함께 나누다!',
+      '반씩 쪼개어 나누기!'
     ],
     meaning: '공유하다, 나누다',
     example_en: 'Can you share your toys with me?',
@@ -48,11 +48,11 @@ const BUILTIN_MNEMONIC_DICT = {
     word: 'explore',
     pronunciation: '[익스플로어 / ɪkˈsplɔːr]',
     part_of_speech: '동사',
-    mnemonic: '익숙한 길을 벗어나(ex) 미지의 신비한 숲속을 당당히 탐험하다(explore)!',
+    mnemonic: '신비한 세계 탐험!',
     mnemonic_candidates: [
-      '익숙한 길을 벗어나(ex) 미지의 신비한 숲속을 당당히 탐험하다(explore)!',
-      '미지의 보물섬을 향해 나침반 들고 신비한 정글을 탐험(explore)하다!',
-      '우주 탐사선 익스플로러호처럼 새로운 별과 신비한 세계를 탐험(explore)해요!'
+      '신비한 세계 탐험!',
+      '새로운 세상 탐험!',
+      '비밀의 숲 탐험!'
     ],
     meaning: '탐험하다',
     example_en: "Let's explore the mystery cave.",
@@ -62,11 +62,11 @@ const BUILTIN_MNEMONIC_DICT = {
     word: 'whisper',
     pronunciation: '[휘스퍼 / ˈwɪspər]',
     part_of_speech: '동사',
-    mnemonic: '귓가에 바람처럼 휘~ 스르륵 소리 낮춰 조용히 속삭이다(whisper)!',
+    mnemonic: '바람처럼 휘~ 속삭이다!',
     mnemonic_candidates: [
-      '귓가에 바람처럼 휘~ 스르륵 소리 낮춰 조용히 속삭이다(whisper)!',
-      '도서관에서는 큰 소리 대신 귓가에 조용히 소곤소곤 속삭여요(whisper)!',
-      '친구에게만 알려주는 특급 비밀을 귓가에 휘~ 살짝 속삭이다!'
+      '바람처럼 휘~ 속삭이다!',
+      '귓가에 살짝 속삭이다!',
+      '도서관에선 조용히 속삭여요!'
     ],
     meaning: '속삭이다, 귓속말하다',
     example_en: 'Please whisper in the library.',
@@ -76,11 +76,11 @@ const BUILTIN_MNEMONIC_DICT = {
     word: 'blunder',
     pronunciation: '[블런더 / ˈblʌndər]',
     part_of_speech: '명사',
-    mnemonic: '눈먼 듯이(blind) 앞을 못 보고 넘어져 버린 어처구니없는 큰 실수(blunder)!',
+    mnemonic: '실수하면 불난다!',
     mnemonic_candidates: [
-      '눈먼 듯이(blind) 앞을 못 보고 넘어져 버린 어처구니없는 큰 실수(blunder)!',
-      '큰 실수(blunder)를 저질러서 발등에 불 떨어진 듯 화끈화끈!',
-      '실수로 컵을 블런(던)져서 깨뜨린 어처구니없는 큰 실수(blunder)!'
+      '실수하면 불난다!',
+      '어이쿠 불난다! 큰실수!',
+      '실수 조심! 불난다!'
     ],
     meaning: '큰 실수, 실수하다',
     example_en: "Don't worry, it was just a small blunder.",
@@ -90,11 +90,11 @@ const BUILTIN_MNEMONIC_DICT = {
     word: 'curious',
     pronunciation: '[큐리어스 / ˈkjʊəriəs]',
     part_of_speech: '형용사',
-    mnemonic: '질문 큐(Q)! 궁금한 게 너무 많은 호기심(curious) 대장!',
+    mnemonic: '질문 큐! 호기심대장!',
     mnemonic_candidates: [
-      '질문 큐(Q)! 궁금한 게 너무 많은 호기심(curious) 대장!',
-      '큐(Q)마크 물음표를 달고 온통 궁금해하는 호기심(curious) 탐험가!',
-      '퀴리(Curie) 박사님처럼 새로운 원리를 찾아 나서는 강한 호기심(curious)!'
+      '질문 큐! 호기심대장!',
+      '궁금증 폭발! 큐!',
+      '호기심 대장! 큐!'
     ],
     meaning: '호기심 많은, 궁금한',
     example_en: 'I am curious about space.',
@@ -104,11 +104,11 @@ const BUILTIN_MNEMONIC_DICT = {
     word: 'explain',
     pronunciation: '[익스플레인 / ɪkˈspleɪn]',
     part_of_speech: '동사',
-    mnemonic: '복잡하게 얽힌 것을 알기 쉽게 플레인(plain: 평평하게) 쫙 펴서 설명하다(explain)!',
+    mnemonic: '알기 쉽게 설명!',
     mnemonic_candidates: [
-      '복잡하게 얽힌 것을 알기 쉽게 플레인(plain: 평평하게) 쫙 펴서 설명하다(explain)!',
-      '어려운 수학 문제를 누구나 이해하기 쉽게 차근차근 풀어서(ex) 설명(explain)해 줘!',
-      '핵심(ex)만 쏙쏙 뽑아 친구 눈높이에 꼭 맞게 친절히 설명(explain)해요!'
+      '알기 쉽게 설명!',
+      '이해 쏙쏙 설명!',
+      '차근차근 쉬운 설명!'
     ],
     meaning: '설명하다',
     example_en: 'Can you explain this math question?',
@@ -118,11 +118,11 @@ const BUILTIN_MNEMONIC_DICT = {
     word: 'protect',
     pronunciation: '[프로텍트 / prəˈtekt]',
     part_of_speech: '동사',
-    mnemonic: '전문 프로(전문가) 경호원처럼 딱(tect) 막아서 소중한 사람을 보호하다(protect)!',
+    mnemonic: '프로처럼 딱 보호!',
     mnemonic_candidates: [
-      '전문 프로(전문가) 경호원처럼 딱(tect) 막아서 소중한 사람을 보호하다(protect)!',
-      '자전거 탈 때 무릎 보호대(프로텍터)를 딱 차고 안전하게 몸을 보호(protect)해요!',
-      '방패를 프로처럼 딱(텍) 앞으로 들어 친구와 지구를 안전하게 지키고 보호하다!'
+      '프로처럼 딱 보호!',
+      '방패로 딱 보호!',
+      '안전하게 지키고 보호!'
     ],
     meaning: '보호하다, 지키다',
     example_en: 'We must protect our clean playground.',
@@ -132,11 +132,11 @@ const BUILTIN_MNEMONIC_DICT = {
     word: 'courage',
     pronunciation: '[커리지 / ˈkʌrɪdʒ]',
     part_of_speech: '명사',
-    mnemonic: '두려움을 떨쳐내고 가슴속에서 쑤욱 커(cour)지는 씩씩한 용기(courage)!',
+    mnemonic: '가슴에서 커진 용기!',
     mnemonic_candidates: [
-      '두려움을 떨쳐내고 가슴속에서 쑤욱 커(cour)지는 씩씩한 용기(courage)!',
-      '어려운 도전 앞에서도 "난 할 수 있어!" 당당하게 일어서는 커다란 용기(courage)!',
-      '쿵쾅거리는 가슴을 진정시키고 무대 위로 씩씩하게 나아가는 멋진 용기(courage)!'
+      '가슴에서 커진 용기!',
+      '씩씩하게 커진 용기!',
+      '두려움 없는 용기!'
     ],
     meaning: '용기, 담력',
     example_en: 'Take courage and try your best.',
@@ -146,11 +146,11 @@ const BUILTIN_MNEMONIC_DICT = {
     word: 'treasure',
     pronunciation: '[트레저 / ˈtreʒər]',
     part_of_speech: '명사',
-    mnemonic: '해적선의 비밀 보물 상자(트레저) 속에 가득 찬 반짝이는 보물!',
+    mnemonic: '해적선의 황금 보물!',
     mnemonic_candidates: [
-      '해적선의 비밀 보물 상자(트레저) 속에 가득 찬 반짝이는 보물!',
-      '흙 속에 묻혀 있던 오래된 역사 속 트레저(보물)를 발견했어요!',
-      '세상 무엇과도 바꿀 수 없는 가족과 친구는 나의 가장 소중한 보물(treasure)!'
+      '해적선의 황금 보물!',
+      '반짝반짝 소중한 보물!',
+      '세상에서 가장 귀한보물!'
     ],
     meaning: '보물, 소중한 것',
     example_en: 'Good friends are my real treasure.',
@@ -160,11 +160,11 @@ const BUILTIN_MNEMONIC_DICT = {
     word: 'patient',
     pronunciation: '[페이션트 / ˈpeɪʃnt]',
     part_of_speech: '형용사',
-    mnemonic: '조급해하지 않고 마음의 페이스(pace)를 지키며 기다리는 참을성(patient)!',
+    mnemonic: '페이스 지키는 참을성!',
     mnemonic_candidates: [
-      '조급해하지 않고 마음의 페이스(pace)를 지키며 기다리는 참을성(patient)!',
-      '줄 설 때 새치기(패스)하지 않고 내 차례를 묵묵히 기다리는 인내심(patient)!',
-      '씨앗에서 싹이 틀 때까지 서두르지 않고 기다리는 착한 참을성(patient)!'
+      '페이스 지키는 참을성!',
+      '차례 기다리는 인내심!',
+      '차분하게 기다리는 참을성!'
     ],
     meaning: '참을성 있는, 인내심 있는',
     example_en: 'Please be patient and wait your turn.',
@@ -174,11 +174,11 @@ const BUILTIN_MNEMONIC_DICT = {
     word: 'diligent',
     pronunciation: '[딜리전트 / ˈdɪlɪdʒənt]',
     part_of_speech: '형용사',
-    mnemonic: '미루기(딜레이) 절대 없이 할 일을 척척 끝내는 부지런한(diligent) 모범생!',
+    mnemonic: '딜레이 없는 부지런함!',
     mnemonic_candidates: [
-      '미루기(딜레이) 절대 없이 할 일을 척척 끝내는 부지런한(diligent) 모범생!',
-      '매일(daily) 아침 일찍 일어나 계획대로 움직이는 성실하고 부지런한(diligent) 습관!',
-      '쉬지 않고 꿀을 모으는 일개미처럼 한결같이 부지런한(diligent) 사람!'
+      '딜레이 없는 부지런함!',
+      '매일 일찍 부지런함!',
+      '성실하게 일하는 부지런함!'
     ],
     meaning: '부지런한, 성실한',
     example_en: 'He is a diligent and smart student.',
@@ -188,11 +188,11 @@ const BUILTIN_MNEMONIC_DICT = {
     word: 'generous',
     pronunciation: '[제너러스 / ˈdʒenərəs]',
     part_of_speech: '형용사',
-    mnemonic: '친구의 실수도 제(자신의) 일처럼 먼저 안아주는 너그럽고(generous) 관대한 마음!',
+    mnemonic: '친구를 너그럽게 안아줘요!',
     mnemonic_candidates: [
-      '친구의 실수도 제(자신의) 일처럼 먼저 안아주는 너그럽고(generous) 관대한 마음!',
-      '친구들에게 장난감도 간식도 아낌없이 넉넉하게 베푸는 너그러운(generous) 성품!',
-      '마음의 문을 활짝 열고 누구에게나 친절하게 베푸는 관대하고 너그러운 사람!'
+      '친구를 너그럽게 안아줘요!',
+      '실수해도 너그럽게 용서!',
+      '마음 넓고 너그러움!'
     ],
     meaning: '너그러운, 관대한',
     example_en: 'She is always generous to everyone.',
