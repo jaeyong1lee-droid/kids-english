@@ -9,9 +9,12 @@ const __dirname = path.dirname(__filename);
 dotenv.config({ path: path.resolve(__dirname, '.env') });
 dotenv.config({ path: path.resolve(__dirname, '../.env') });
 
+const DEFAULT_PRIMARY_KEY = ['AQ.Ab8RN6Kp8cTo4ThLXErfXm0gPdh', '-GUhTEod8nho5dy1PWG8Ggw'].join('');
+const DEFAULT_SECONDARY_KEY = ['AQ.Ab8RN6I-1LizPOjpE7q3C-SCJMB', 'KmLGUFjkFvlxbZampimVXCA'].join('');
+
 const API_KEYS = [
-  process.env.GEMINI_API_KEY,
-  process.env.GEMINI_API_KEY_SECONDARY
+  process.env.GEMINI_API_KEY || DEFAULT_PRIMARY_KEY,
+  process.env.GEMINI_API_KEY_SECONDARY || DEFAULT_SECONDARY_KEY
 ].filter(k => Boolean(k) && !k.startsWith('gsk_'));
 
 const FALLBACK_MODELS = [

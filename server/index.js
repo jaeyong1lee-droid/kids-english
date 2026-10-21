@@ -134,13 +134,37 @@ app.post('/api/sheets/generate', async (req, res) => {
       theme = autoThemes[(dayNumber - 1) % autoThemes.length];
     }
 
-    // Fetch all previously used words from DB so AI avoids duplicating past words
-    const pastWords = await dbQuery.all(`
-      SELECT word, meaning, appearance_count
-      FROM kids_english_words
-      ORDER BY last_seen_at DESC
-      LIMIT 100
-    `);
+    // Fetch all previously used words from existing sheets & word bank so AI avoids duplicating past words
+    const [pastWordRows, existingSheetRows] = await Promise.all([
+      dbQuery.all(`
+        SELECT word, meaning
+        FROM kids_english_words
+        ORDER BY last_seen_at DESC
+        LIMIT 200
+      `),
+      dbQuery.all(`
+        SELECT section1_data, section2_data
+        FROM kids_english_sheets
+      `)
+    ]);
+
+    const usedWordMap = new Map();
+    for (const row of existingSheetRows) {
+      const s1 = typeof row.section1_data === 'string' ? JSON.parse(row.section1_data) : row.section1_data;
+      const s2 = typeof row.section2_data === 'string' ? JSON.parse(row.section2_data) : row.section2_data;
+      s1?.words?.forEach(w => {
+        if (w?.word) usedWordMap.set(w.word.toLowerCase().trim(), { word: w.word.toLowerCase().trim(), meaning: w.meaning || '' });
+      });
+      s2?.expressions?.forEach(e => {
+        if (e?.key_word) usedWordMap.set(e.key_word.toLowerCase().trim(), { word: e.key_word.toLowerCase().trim(), meaning: e.key_word_meaning || '' });
+      });
+    }
+    for (const w of pastWordRows) {
+      if (w?.word && !usedWordMap.has(w.word.toLowerCase().trim())) {
+        usedWordMap.set(w.word.toLowerCase().trim(), { word: w.word.toLowerCase().trim(), meaning: w.meaning || '' });
+      }
+    }
+    const pastWords = Array.from(usedWordMap.values());
 
     console.log(`[Generate] Generating worksheet for Day ${dayNumber} (${theme})...`);
     const generatedData = await generateDailyWorksheet({
