@@ -11,14 +11,15 @@ dotenv.config({ path: path.resolve(__dirname, '../.env') });
 
 const API_KEYS = [
   process.env.GEMINI_API_KEY,
-  process.env.GEMINI_API_KEY_SECONDARY,
-  process.env.GEMINI_API_KEY_TERTIARY
-].filter(Boolean);
+  process.env.GEMINI_API_KEY_SECONDARY
+].filter(k => Boolean(k) && !k.startsWith('gsk_'));
 
 const FALLBACK_MODELS = [
-  'gemini-2.5-flash',
-  'gemini-1.5-flash',
-  'gemini-1.5-pro'
+  'gemini-3.5-flash-lite',
+  'gemini-3.5-flash',
+  'gemini-3.1-flash-lite',
+  'gemini-2.5-flash-lite',
+  'gemini-2.5-flash'
 ];
 
 /**
@@ -49,8 +50,8 @@ export async function generateDailyWorksheet({
   gradeLevel = '초등 3~6학년',
   pastWords = []
 } = {}) {
-  const reviewWordsPrompt = pastWords.length > 0
-    ? `\n[과거 출제된 복습 단어 후보 목록(이 중 4~5개를 골라 3단락 복습 단어로 활용하세요)]:\n${pastWords.map(w => `- ${w.word} (${w.meaning})`).join('\n')}`
+  const excludedWordsPrompt = pastWords.length > 0
+    ? `\n[이전 회차(Day)에 이미 출제된 단어 목록 - 이번 Day ${dayNumber}의 1단락 5개 단어 및 2단락 핵심 단어 선정 시 아래 단어들은 절대 중복 사용하지 마세요]:\n${pastWords.map(w => w.word).join(', ')}`
     : '';
 
   const systemInstruction = `당신은 대한민국 초등학교 3~6학년 학생들을 위한 최고의 어린이 영어 교육 전문가이자 창의적인 학습지 작가입니다.
@@ -96,12 +97,12 @@ export async function generateDailyWorksheet({
   const userPrompt = `Day ${dayNumber} 학습지를 구성해주세요.
 - 테마: ${theme}
 - 권장 대상: ${gradeLevel}
-${reviewWordsPrompt}
+${excludedWordsPrompt}
 
 다음 JSON 스키마를 엄격히 준수하여 출력하세요:
 {
   "day_number": ${dayNumber},
-  "title": "Day ${dayNumber} 테마 한 줄 제목 (예: 학교에서 당당하게 질문하기)",
+  "title": "Day ${dayNumber}: 테마 한 줄 제목 (예: Day ${dayNumber}: 맛있는 간식과 요리 영어 완전 정복!)",
   "theme": "${theme}",
   "grade_level": "${gradeLevel}",
   "section1": {
@@ -112,11 +113,11 @@ ${reviewWordsPrompt}
         "word": "blunder",
         "pronunciation": "[블런더 / ˈblʌndər]",
         "part_of_speech": "명사",
-        "mnemonic": "실수하면 큰 불난다(블런더)! 불나지 않게 큰 실수 조심!",
+        "mnemonic": "실수하면 불난다! 블런더!",
         "mnemonic_candidates": [
-          "실수하면 큰 불난다(블런더)! 불나지 않게 큰 실수 조심!",
-          "시험 문제 안 보고(blind) 풀다 어처구니없는 큰 실수(blunder)!",
-          "실수로 컵을 블런(던)져서 깨뜨린 어처구니없는 실수!"
+          "실수하면 불난다! 블런더!",
+          "큰 실수하면 불난다(블런더)!",
+          "어이쿠 실수! 불난다 블런더!"
         ],
         "meaning": "큰 실수, 실수하다",
         "example_en": "Don't worry, it was just a small blunder.",

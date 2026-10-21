@@ -120,22 +120,26 @@ app.post('/api/sheets/generate', async (req, res) => {
       const autoThemes = [
         '신나는 학교와 수업 시간',
         '친구와 함께하는 놀이와 게임',
-        '맛있는 음식과 요리',
+        '맛있는 음식과 요리 시간',
         '신비로운 자연과 동물 탐험',
         '기분과 감정 솔직하게 표현하기',
         '가족과 함께하는 주말 여행',
         '우리 동네와 슈퍼마켓 장보기',
-        '취미와 좋아하는 운동'
+        '취미와 좋아하는 스포츠 운동',
+        '사계절 날씨와 옷차림',
+        '나의 꿈과 미래의 멋진 직업',
+        '건강한 생활 습관과 병원',
+        '우주와 과학 발명 이야기'
       ];
       theme = autoThemes[(dayNumber - 1) % autoThemes.length];
     }
 
-    // Fetch past words from DB to provide spaced repetition candidate pool
+    // Fetch all previously used words from DB so AI avoids duplicating past words
     const pastWords = await dbQuery.all(`
       SELECT word, meaning, appearance_count
       FROM kids_english_words
-      ORDER BY appearance_count ASC, RANDOM()
-      LIMIT 10
+      ORDER BY last_seen_at DESC
+      LIMIT 100
     `);
 
     console.log(`[Generate] Generating worksheet for Day ${dayNumber} (${theme})...`);
@@ -154,7 +158,7 @@ app.post('/api/sheets/generate', async (req, res) => {
       [
         dayNumber,
         generatedData.title || `Day ${dayNumber}: ${theme}`,
-        theme,
+        generatedData.theme || theme,
         gradeLevel,
         JSON.stringify(generatedData.section1),
         JSON.stringify(generatedData.section2),

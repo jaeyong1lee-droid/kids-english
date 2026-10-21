@@ -5,13 +5,14 @@ export default function Navbar({
   currentDay,
   onPrevDay,
   onNextDay,
-  onOpenGenerateModal,
+  onGenerateNext,
   onOpenHistory,
   onOpenWordBank,
   showAnswers,
   setShowAnswers,
   onPrint,
-  isGenerating
+  isGenerating,
+  nextDayNumber
 }) {
   return (
     <header className="no-print sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-sm">
@@ -90,14 +91,15 @@ export default function Navbar({
             <span>보관함</span>
           </button>
 
-          {/* Generate New Sheet AI */}
+          {/* Generate New Sheet AI (Direct Next Day Generation without Popup) */}
           <button
-            onClick={onOpenGenerateModal}
+            onClick={onGenerateNext}
             disabled={isGenerating}
             className="flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-extrabold rounded-lg bg-gradient-to-r from-amber-500 to-orange-500 text-white shadow-sm hover:from-amber-600 hover:to-orange-600 transition disabled:opacity-50"
+            title={nextDayNumber ? `팝업 없이 Day ${nextDayNumber} 학습지를 즉시 생성합니다` : '다음 회차 학습지를 즉시 생성합니다'}
           >
-            <Sparkles size={15} />
-            <span>{isGenerating ? 'AI 출제 중...' : '새 학습지 AI 생성'}</span>
+            <Sparkles size={15} className={isGenerating ? 'animate-spin' : ''} />
+            <span>{isGenerating ? `Day ${nextDayNumber || ''} AI 출제 중...` : '새 학습지 AI 생성'}</span>
           </button>
 
           {/* Print Button */}

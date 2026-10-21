@@ -172,13 +172,14 @@ export default function App() {
         currentDay={currentSheet?.day_number}
         onPrevDay={handlePrevDay}
         onNextDay={handleNextDay}
-        onOpenGenerateModal={() => setIsNewModalOpen(true)}
+        onGenerateNext={() => handleGenerateSheet({ dayNumber: nextDaySuggestion, gradeLevel: '초등 3~6학년' })}
         onOpenHistory={() => setIsHistoryModalOpen(true)}
         onOpenWordBank={() => setIsWordBankOpen(true)}
         showAnswers={showAnswers}
         setShowAnswers={setShowAnswers}
         onPrint={handlePrint}
         isGenerating={isGenerating}
+        nextDayNumber={nextDaySuggestion}
       />
 
       {/* Main Content Area */}
@@ -230,10 +231,11 @@ export default function App() {
               AI가 오늘 공부할 1, 2, 3단락 학습지를 10초 만에 만들어 드립니다.
             </p>
             <button
-              onClick={() => setIsNewModalOpen(true)}
-              className="px-5 py-2.5 bg-gradient-to-r from-amber-500 to-orange-500 text-white font-extrabold text-xs rounded-xl shadow-md hover:from-amber-600 transition"
+              onClick={() => handleGenerateSheet({ dayNumber: nextDaySuggestion, gradeLevel: '초등 3~6학년' })}
+              disabled={isGenerating}
+              className="px-5 py-2.5 bg-gradient-to-r from-amber-500 to-orange-500 text-white font-extrabold text-xs rounded-xl shadow-md hover:from-amber-600 transition disabled:opacity-50"
             >
-              새 학습지 AI 생성하기
+              {isGenerating ? `Day ${nextDaySuggestion} AI 출제 중...` : '새 학습지 AI 생성하기'}
             </button>
           </div>
         )}
